@@ -1,6 +1,6 @@
-var Drawing = {}; //As namespace
+var KChart = {}; //As namespace
 
-Drawing.Util = {
+KChart.Util = {
 
 	extend: function(dist) {
 		var i, j, len, src;
@@ -24,9 +24,9 @@ Drawing.Util = {
 	}
 };
 
-Drawing.Object = function() {};
+KChart.Object = function() {};
 
-Drawing.Object.extend = function(props) {
+KChart.Object.extend = function(props) {
 
 	// @function extend(props: Object): Function
 	// [Extends the current class](#class-inheritance) given the properties to be included.
@@ -42,7 +42,7 @@ Drawing.Object.extend = function(props) {
 	 * NewClass__base__ points to its parent's prototype
 	 */
 	var parentProto = NewClass.__root__ = NewClass.__base__ = this.prototype;
-	var proto = Drawing.Util.create(parentProto);
+	var proto = KChart.Util.create(parentProto);
 	proto.constructor = NewClass;
 	NewClass.prototype = proto;
 
@@ -56,18 +56,18 @@ Drawing.Object.extend = function(props) {
 
 	// mix static properties into the class
 	if(props.statics) {
-		Drawing.Util.extend(NewClass, props.statics);
+		KChart.Util.extend(NewClass, props.statics);
 		delete props.statics;
 	}
 
 	// merge options
 	if(proto.options) {
-		proto.options = Drawing.Util.extend(Drawing.Util.create(proto.options), props.options);
+		proto.options = KChart.Util.extend(KChart.Util.create(proto.options), props.options);
 		delete props.options;
 	}
 
 	// merge options
-	Drawing.Util.extend(proto, props);
+	KChart.Util.extend(proto, props);
 
 	return NewClass;
 };

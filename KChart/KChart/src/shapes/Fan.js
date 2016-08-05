@@ -1,4 +1,4 @@
-Drawing.Fan = Drawing.Shape.extend({
+KChart.Fan = KChart.Shape.extend({
 	
 	initialize: function(center, radius, sAngle, eAngle, counterclockwise) {
 		this.center=center;

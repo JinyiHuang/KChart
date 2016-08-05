@@ -1,4 +1,4 @@
-Drawing.Point = Drawing.Shape.extend({
+KChart.Point = KChart.Shape.extend({
 	
 	getPerimeter: function() {
 		return 0;

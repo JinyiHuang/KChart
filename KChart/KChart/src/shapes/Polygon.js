@@ -1,4 +1,4 @@
-Drawing.Polygon = Drawing.Shape.extend({
+KChart.Polygon = KChart.Shape.extend({
 	
 	getPerimeter: function() {
 		var perimeter = 0;

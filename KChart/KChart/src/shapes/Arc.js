@@ -1,4 +1,4 @@
-Drawing.Arc = Drawing.Shape.extend({
+KChart.Arc = KChart.Shape.extend({
 	
 	initialize: function(center, radius, sAngle, eAngle, counterclockwise) {
 		this.vertexes = [center];

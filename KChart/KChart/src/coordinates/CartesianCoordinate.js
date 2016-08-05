@@ -1,4 +1,4 @@
-Drawing.CartesianCoordinate = Drawing.Coordinate.extend({
+KChart.CartesianCoordinate = KChart.Coordinate.extend({
 
 	initialize: function(basePoint, width, height, unitWidth, unitHeight) {
 		this.basePoint = basePoint;
@@ -9,7 +9,7 @@ Drawing.CartesianCoordinate = Drawing.Coordinate.extend({
 	},
 
 	drawXAxis: function(painter, keys) {
-		painter.setStyle(new Drawing.Style({
+		painter.setStyle(new KChart.Style({
 			color: 'black',
 			dashArray: null
 		}));
@@ -17,7 +17,7 @@ Drawing.CartesianCoordinate = Drawing.Coordinate.extend({
 		var horizontalOffset = this.basePoint.x,
 			height = this.basePoint.y;
 
-		var x = new Drawing.PolyLine([this.basePoint, new Drawing.Vertex(horizontalOffset + this.width, height)]);
+		var x = new KChart.PolyLine([this.basePoint, new KChart.Vertex(horizontalOffset + this.width, height)]);
 		painter.draw(x);
 
 		for(var i = 0; i < keys.length; i++) {
@@ -32,7 +32,7 @@ Drawing.CartesianCoordinate = Drawing.Coordinate.extend({
 	},
 
 	drawYAxis: function(painter, values) {
-		painter.setStyle(new Drawing.Style({
+		painter.setStyle(new KChart.Style({
 			color: 'black',
 			dashArray: null
 		}));
@@ -41,15 +41,15 @@ Drawing.CartesianCoordinate = Drawing.Coordinate.extend({
 			vertexOffset = height - this.height,
 			height = this.basePoint.y;
 
-		var y = new Drawing.PolyLine([this.basePoint, new Drawing.Vertex(horizontalOffset, height - this.height)]);
+		var y = new KChart.PolyLine([this.basePoint, new KChart.Vertex(horizontalOffset, height - this.height)]);
 		painter.draw(y);
 
 		var unitHeight = this.unitHeight,
 			unitWidth = this.unitWidth;
 
-		var vertex = Drawing.Vertex;
+		var vertex = KChart.Vertex;
 
-		painter.setStyle(new Drawing.Style({
+		painter.setStyle(new KChart.Style({
 			color: "black",
 			weight: 1,
 			fill: true,
@@ -58,7 +58,7 @@ Drawing.CartesianCoordinate = Drawing.Coordinate.extend({
 		}));
 
 		for(var i = 0; i < values.length; i++) {
-			var polyline = new Drawing.PolyLine([
+			var polyline = new KChart.PolyLine([
 				new vertex(horizontalOffset, height - values[i] * unitHeight),
 				new vertex((i + 0.5) * unitWidth + horizontalOffset, height - values[i] * unitHeight)
 			]);

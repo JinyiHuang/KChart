@@ -72,7 +72,7 @@ KChart.Object.extend = function(props) {
 	return NewClass;
 };
 
-KChart.myEvent = {
+KChart.CrossBrowserEvent = {
 
 	addListener: function(elem, type, handler) {
 
@@ -423,7 +423,7 @@ KChart.Animation = KChart.Object.extend({
 	initialize: function(start, end, tween) {
 		this.start = start;
 		this.end = end;
-		this.tween = tween || KChart.helper.Tween.Linear;
+		this.tween = tween || KChart.Helper.Tween.Linear;
 	},
 
 	drawAnimation: function(chart) {}
@@ -523,7 +523,7 @@ KChart.Handler = KChart.Object.extend({
 	handle: function(e) {}
 });
 
-KChart.helper = {
+KChart.Helper = {
 
 	getMax: function(values) {
 		var max = values[0];
@@ -565,7 +565,7 @@ KChart.helper = {
 		switch(eventType) {
 			case 'mousemove':
 				var handler = new KChart.HoverHandler(chart);
-				KChart.myEvent.addListener(chart.painter.canvas, eventType, function(e) {
+				KChart.CrossBrowserEvent.addListener(chart.painter.canvas, eventType, function(e) {
 					handler.handle.call(handler, e);
 				});
 			default:
@@ -914,7 +914,7 @@ KChart.BarAnimation = KChart.Animation.extend({
 			b = 0,
 			c = values[index] * unitHeight;
 
-		KChart.helper.requestAnimFrame.call(window, draw);
+		KChart.Helper.requestAnimFrame.call(window, draw);
 
 		function draw() {
 			t++;
@@ -929,18 +929,18 @@ KChart.BarAnimation = KChart.Animation.extend({
 			painter.draw(polygon);
 
 			if(t < d) {
-				KChart.helper.requestAnimFrame.call(window, draw);
+				KChart.Helper.requestAnimFrame.call(window, draw);
 			} else {
 				index++;
 
 				if(index == count) {
-					KChart.helper.cancelAnimFrame.call(window, draw);
+					KChart.Helper.cancelAnimFrame.call(window, draw);
 				} else {
 					t = me.start,
 						d = me.end,
 						b = 0,
 						c = values[index] * unitHeight;
-					KChart.helper.requestAnimFrame.call(window, draw);
+					KChart.Helper.requestAnimFrame.call(window, draw);
 				}
 			}
 		};
@@ -976,7 +976,7 @@ KChart.FanAnimation = KChart.Animation.extend({
 		});
 		painter.setStyle(newStyle);
 
-		KChart.helper.requestAnimFrame.call(window, draw);
+		KChart.Helper.requestAnimFrame.call(window, draw);
 
 		function draw() {
 			t++;
@@ -986,12 +986,12 @@ KChart.FanAnimation = KChart.Animation.extend({
 			painter.draw(fan);
 
 			if(t < d) {
-				KChart.helper.requestAnimFrame.call(window, draw);
+				KChart.Helper.requestAnimFrame.call(window, draw);
 			} else {
 				index++;
 
 				if(index == 6) {
-					KChart.helper.cancelAnimFrame.call(window, draw);
+					KChart.Helper.cancelAnimFrame.call(window, draw);
 				} else {
 					t = me.start,
 						d = me.end,
@@ -1008,7 +1008,7 @@ KChart.FanAnimation = KChart.Animation.extend({
 					});
 					painter.setStyle(newStyle);
 
-					KChart.helper.requestAnimFrame.call(window, draw);
+					KChart.Helper.requestAnimFrame.call(window, draw);
 				}
 			}
 		}
@@ -1039,7 +1039,7 @@ KChart.LineAnimation = KChart.Animation.extend({
 			(vertexes[index].x - vertexes[index + 1].x),
 			a = vertexes[index].y - k * vertexes[index].x;
 
-		KChart.helper.requestAnimFrame.call(window, draw);
+		KChart.Helper.requestAnimFrame.call(window, draw);
 
 		function draw() {
 			t++;
@@ -1049,12 +1049,12 @@ KChart.LineAnimation = KChart.Animation.extend({
 			painter.draw(line);
 
 			if(t < d) {
-				KChart.helper.requestAnimFrame.call(window, draw);
+				KChart.Helper.requestAnimFrame.call(window, draw);
 			} else {
 				index++;
 
 				if(index == count - 1) {
-					KChart.helper.cancelAnimFrame.call(window, draw);
+					KChart.Helper.cancelAnimFrame.call(window, draw);
 				} else {
 
 					t = me.start,
@@ -1066,7 +1066,7 @@ KChart.LineAnimation = KChart.Animation.extend({
 						(vertexes[index].x - vertexes[index + 1].x),
 						a = vertexes[index].y - k * vertexes[index].x;
 
-					KChart.helper.requestAnimFrame.call(window, draw);
+					KChart.Helper.requestAnimFrame.call(window, draw);
 				}
 			}
 		};
@@ -1083,14 +1083,14 @@ KChart.HoverHandler = KChart.Handler.extend({
 		var chart = this.chart,
 			div = this.div;
 
-		e = KChart.myEvent.getEvent(e);
+		e = KChart.CrossBrowserEvent.getEvent(e);
 
-		var mousePosition = KChart.helper.getPointOnCanvas(chart.painter.canvas, {
+		var mousePosition = KChart.Helper.getPointOnCanvas(chart.painter.canvas, {
 			x: e.clientX,
 			y: e.clientY
 		});
 
-		var index = KChart.helper.inRange(mousePosition, chart.eles);
+		var index = KChart.Helper.inRange(mousePosition, chart.eles);
 
 		if(index != -1) {
 			div.width = 100;
@@ -1252,7 +1252,7 @@ KChart.BarChart = KChart.Chart.extend({
 
 		this.constructor.__base__.draw.apply(this, arguments);
 
-		var helper = KChart.helper,
+		var Helper = KChart.Helper,
 
 			height = this.height,
 			width = this.width,
@@ -1272,7 +1272,7 @@ KChart.BarChart = KChart.Chart.extend({
 			values.push(data[keys[i]]);
 		}
 
-		var max = helper.getMax(values),
+		var max = Helper.getMax(values),
 			unitWidth = this.unitWidth = width / count,
 			unitHeight = this.unitHeight = (height * 0.95) / max;
 
@@ -1289,7 +1289,7 @@ KChart.BarChart = KChart.Chart.extend({
 			polygons.push(polygon);
 		}
 
-		//helper.drawXYAxis(painter, offset / 2);
+		//Helper.drawXYAxis(painter, offset / 2);
 		var axis = new KChart.Axis(new vertex(horizontalOffset, realHeight), width, height, unitWidth, unitHeight);
 		axis.drawXAxis(painter, keys);
 		axis.drawYAxis(painter, values);
@@ -1298,7 +1298,7 @@ KChart.BarChart = KChart.Chart.extend({
 		var animation = new KChart.BarAnimation(0, 15);
 		animation.drawAnimation(this);
 
-		helper.addEvent(this, 'mousemove');
+		Helper.addEvent(this, 'mousemove');
 	}
 });
 
@@ -1312,7 +1312,7 @@ KChart.FanChart = KChart.Chart.extend({
 
 		this.constructor.__base__.draw.apply(this, arguments);
 
-		var helper = KChart.helper,
+		var Helper = KChart.Helper,
 
 			painter = this.painter,
 			oldStyle = painter.style;
@@ -1332,7 +1332,7 @@ KChart.FanChart = KChart.Chart.extend({
 			amount += data[keys[i]];
 		}
 
-		var max = helper.getMax(values);
+		var max = Helper.getMax(values);
 
 		var vertex = KChart.Vertex;
 		var fans = this.eles = [],
@@ -1362,7 +1362,7 @@ KChart.FanChart = KChart.Chart.extend({
 		var animation = new KChart.FanAnimation(0, 15);
 		animation.drawAnimation(this);
 
-		helper.addEvent(this, 'mousemove');
+		Helper.addEvent(this, 'mousemove');
 	}
 
 });
@@ -1377,7 +1377,7 @@ KChart.LineChart = KChart.Chart.extend({
 
 		this.constructor.__base__.draw.apply(this, arguments);
 
-		var helper = KChart.helper,
+		var Helper = KChart.Helper,
 
 			height = this.height,
 			width = this.width,
@@ -1397,7 +1397,7 @@ KChart.LineChart = KChart.Chart.extend({
 			values.push(data[keys[i]]);
 		}
 
-		var max = helper.getMax(values),
+		var max = Helper.getMax(values),
 			unitWidth = this.unitWidth = width / count,
 			unitHeight = this.unitHeight = (height * 0.95) / max;
 
@@ -1433,6 +1433,6 @@ KChart.LineChart = KChart.Chart.extend({
 		var animation = new KChart.LineAnimation(0, 15);
 		animation.drawAnimation(this);
 
-		helper.addEvent(this, 'mousemove');
+		Helper.addEvent(this, 'mousemove');
 	}
 });

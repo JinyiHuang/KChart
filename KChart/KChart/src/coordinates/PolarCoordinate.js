@@ -1,8 +1,8 @@
-Drawing.PolarCoordinate = Drawing.Coordinate.extend({
+KChart.PolarCoordinate = KChart.Coordinate.extend({
 
-	initialize: function(basePoint, width) {
-		this.basePoint = basePoint;
-		this.width = width;
-	}
-	
-}
+    initialize: function (basePoint, width) {
+        this.basePoint = basePoint;
+        this.width = width;
+    }
+
+});

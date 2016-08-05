@@ -1,4 +1,4 @@
-Drawing.HoverHandler = Drawing.Handler.extend({
+KChart.HoverHandler = KChart.Handler.extend({
 
 	initialize: function(chart) {
 		this.constructor.__base__.initialize.apply(this, arguments);
@@ -8,14 +8,14 @@ Drawing.HoverHandler = Drawing.Handler.extend({
 		var chart = this.chart,
 			div = this.div;
 
-		e = myEvent.getEvent(e);
+		e = CrossBrowserEvent.getEvent(e);
 
-		var mousePosition = Drawing.helper.getPointOnCanvas(chart.painter.canvas, {
+		var mousePosition = KChart.Helper.getPointOnCanvas(chart.painter.canvas, {
 			x: e.clientX,
 			y: e.clientY
 		});
 
-		var index = Drawing.helper.inRange(mousePosition, chart.eles);
+		var index = KChart.Helper.inRange(mousePosition, chart.eles);
 
 		if(index != -1) {
 			div.width = 100;

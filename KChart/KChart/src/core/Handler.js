@@ -1,4 +1,4 @@
-Drawing.Handler = Drawing.Object.extend({
+KChart.Handler = KChart.Object.extend({
 
 	initialize: function(chart) {
 		this.chart = chart;

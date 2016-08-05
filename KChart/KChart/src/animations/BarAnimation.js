@@ -1,4 +1,4 @@
-Drawing.BarAnimation = Drawing.Animation.extend({
+KChart.BarAnimation = KChart.Animation.extend({
 
 	initialize: function(start, end, tween) {
 		this.constructor.__base__.initialize.apply(this, arguments);
@@ -16,7 +16,7 @@ Drawing.BarAnimation = Drawing.Animation.extend({
 			unitWidth = chart.unitWidth,
 			unitHeight = chart.unitHeight;
 
-		var vertex = Drawing.Vertex;
+		var vertex = KChart.Vertex;
 
 		var index = 0;
 		var me = this,
@@ -25,13 +25,13 @@ Drawing.BarAnimation = Drawing.Animation.extend({
 			b = 0,
 			c = values[index] * unitHeight;
 
-		Drawing.helper.requestAnimFrame.call(window, draw);
+		KChart.Helper.requestAnimFrame.call(window, draw);
 
 		function draw() {
 			t++;
 			var heightCh = me.tween(t, b, c, d);
 
-			var polygon = new Drawing.Polygon(
+			var polygon = new KChart.Polygon(
 				[new vertex((index + 0.25) * unitWidth + horizontalOffset, realHeight),
 					new vertex((index + 0.25) * unitWidth + horizontalOffset, realHeight - heightCh),
 					new vertex((index + 0.75) * unitWidth + horizontalOffset, realHeight - heightCh),
@@ -40,18 +40,18 @@ Drawing.BarAnimation = Drawing.Animation.extend({
 			painter.draw(polygon);
 
 			if(t < d) {
-				Drawing.helper.requestAnimFrame.call(window, draw);
+				KChart.Helper.requestAnimFrame.call(window, draw);
 			} else {
 				index++;
 
 				if(index == count) {
-					Drawing.helper.cancelAnimFrame.call(window, draw);
+					KChart.Helper.cancelAnimFrame.call(window, draw);
 				} else {
 					t = me.start,
 						d = me.end,
 						b = 0,
 						c = values[index] * unitHeight;
-					Drawing.helper.requestAnimFrame.call(window, draw);
+					KChart.Helper.requestAnimFrame.call(window, draw);
 				}
 			}
 		};

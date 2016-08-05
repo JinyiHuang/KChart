@@ -1,4 +1,4 @@
-Drawing.LineChart = Drawing.Chart.extend({
+KChart.LineChart = KChart.Chart.extend({
 
 	initialize: function(width, height, data, title) {
 		this.constructor.__base__.initialize.apply(this, arguments);
@@ -8,7 +8,7 @@ Drawing.LineChart = Drawing.Chart.extend({
 
 		this.constructor.__base__.draw.apply(this, arguments);
 
-		var helper = Drawing.helper,
+		var Helper = KChart.Helper,
 
 			height = this.height,
 			width = this.width,
@@ -28,22 +28,22 @@ Drawing.LineChart = Drawing.Chart.extend({
 			values.push(data[keys[i]]);
 		}
 
-		var max = helper.getMax(values),
+		var max = Helper.getMax(values),
 			unitWidth = this.unitWidth = width / count,
 			unitHeight = this.unitHeight = (height * 0.95) / max;
 
-		var vertex = Drawing.Vertex;
+		var vertex = KChart.Vertex;
 		var vertexes = this.vertexes = [];
 
 		for(var i = 0; i < count; i++) {
 			vertexes.push(new vertex((i + 0.5) * unitWidth + horizontalOffset, realHeight - values[i] * unitHeight));
 		}
 
-		var axis = new Drawing.Axis(new vertex(horizontalOffset, realHeight), width, height, unitWidth, unitHeight);
+		var axis = new KChart.Axis(new vertex(horizontalOffset, realHeight), width, height, unitWidth, unitHeight);
 		axis.drawXAxis(painter, keys);
 		axis.drawYAxis(painter, values);
 
-		painter.setStyle(new Drawing.Style({
+		painter.setStyle(new KChart.Style({
 			color: "red",
 			fill: true,
 			fillColor: "#eeeeee",
@@ -54,16 +54,16 @@ Drawing.LineChart = Drawing.Chart.extend({
 		var circle;
 
 		for(var i = 0; i < count; i++) {
-			var circle = new Drawing.Circle(vertexes[i], 3);
+			var circle = new KChart.Circle(vertexes[i], 3);
 			painter.draw(circle);
 
 			this.eles.push(circle);
 		}
 
 		painter.setStyle(oldStyle);
-		var animation = new Drawing.LineAnimation(0, 15);
+		var animation = new KChart.LineAnimation(0, 15);
 		animation.drawAnimation(this);
 
-		helper.addEvent(this, 'mousemove');
+		Helper.addEvent(this, 'mousemove');
 	}
 });

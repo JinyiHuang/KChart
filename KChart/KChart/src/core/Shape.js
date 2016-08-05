@@ -1,4 +1,4 @@
-Drawing.Shape = Drawing.Object.extend({
+KChart.Shape = KChart.Object.extend({
 	
 	initialize: function(vertexes) {
 		

@@ -1,4 +1,4 @@
-Drawing.FanChart = Drawing.Chart.extend({
+KChart.FanChart = KChart.Chart.extend({
 
 	initialize: function(width, height, data, title) {
 		this.constructor.__base__.initialize.apply(this, arguments);
@@ -8,7 +8,7 @@ Drawing.FanChart = Drawing.Chart.extend({
 
 		this.constructor.__base__.draw.apply(this, arguments);
 
-		var helper = Drawing.helper,
+		var Helper = KChart.Helper,
 
 			painter = this.painter,
 			oldStyle = painter.style;
@@ -28,9 +28,9 @@ Drawing.FanChart = Drawing.Chart.extend({
 			amount += data[keys[i]];
 		}
 
-		var max = helper.getMax(values);
+		var max = Helper.getMax(values);
 
-		var vertex = Drawing.Vertex;
+		var vertex = KChart.Vertex;
 		var fans = this.eles = [],
 			colors = this.colors = [];
 
@@ -42,7 +42,7 @@ Drawing.FanChart = Drawing.Chart.extend({
 			realRadius = radius * (values[i] / max);
 			eAngle = (values[i] / amount) * 2 * Math.PI + sAngle;
 
-			var fan = new Drawing.Fan(new Drawing.Vertex(centerX, centerY), realRadius, sAngle, eAngle);
+			var fan = new KChart.Fan(new KChart.Vertex(centerX, centerY), realRadius, sAngle, eAngle);
 			fans.push(fan);
 
 			sAngle = eAngle;
@@ -55,10 +55,10 @@ Drawing.FanChart = Drawing.Chart.extend({
 		}
 
 		painter.setStyle(oldStyle);
-		var animation = new Drawing.FanAnimation(0, 15);
+		var animation = new KChart.FanAnimation(0, 15);
 		animation.drawAnimation(this);
 
-		helper.addEvent(this, 'mousemove');
+		Helper.addEvent(this, 'mousemove');
 	}
 
 });

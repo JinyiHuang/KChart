@@ -1,39 +1,7 @@
-Drawing.Style = Drawing.Object.extend({
-	
-	initialize: function(options) {
-		Drawing.Util.extend(this, this.options);
-		Drawing.Util.extend(this, options);
-	},
-
-	options: {
-		stroke: true,
-		color: '#3388ff',
-		weight: 3,
-		opacity: 1,
-		lineCap: 'round',
-		lineJoin: 'round',
-		dashArray: null,
-		dashOffset: null,
-		fill: false,
-		fillColor: null,
-		fillOpacity: 0.2,
-		fillRule: 'evenodd'
-	}
-});
-
-Drawing.Canvas = Drawing.Object.extend({
-	
-	initialize: function(width, height, bgColor) {
-		this.width = width;
-		this.height = height;
-		this.bgColor = bgColor || "black";
-	}
-});
-
-Drawing.Painter = Drawing.Object.extend({
+KChart.Painter = KChart.Object.extend({
 	
 	initialize: function(canvas, style) {
-		this.style = new Drawing.Style();
+		this.style = new KChart.Style();
 		this.setCanvas(canvas);
 		this.setStyle(style);
 	},
@@ -42,22 +10,22 @@ Drawing.Painter = Drawing.Object.extend({
 		this.setCxtStyle();
 
 		switch(shape.constructor) {
-			case Drawing.Point:
+			case KChart.Point:
 				this.drawPoint(shape.vertexes[0]);
 				break;
-			case Drawing.PolyLine:
+			case KChart.PolyLine:
 				this.drawPolyline(shape);
 				break;
-			case Drawing.Polygon:
+			case KChart.Polygon:
 				this.drawPolygon(shape);
 				break;
-			case Drawing.Circle:
+			case KChart.Circle:
 				this.drawCircle(shape);
 				break;
-			case Drawing.Arc:
+			case KChart.Arc:
 				this.drawArc(shape);
 				break;
-			case Drawing.Fan:
+			case KChart.Fan:
 				this.drawFan(shape);
 				break;
 			default:
@@ -67,7 +35,7 @@ Drawing.Painter = Drawing.Object.extend({
 	},
 
 	drawPoint: function(vertex) {
-		var circlePoint = new Drawing.Circle(vertex, 1);
+		var circlePoint = new KChart.Circle(vertex, 1);
 		this.drawCircle(circlePoint);
 	},
 
@@ -146,7 +114,7 @@ Drawing.Painter = Drawing.Object.extend({
 	setCanvas: function(canvas) {
 		var c;
 
-		if(canvas.constructor === Drawing.Canvas) {
+		if(canvas.constructor === KChart.Canvas) {
 			c = document.createElement("canvas");
 			c.width = canvas.width;
 			c.height = canvas.height;
@@ -163,7 +131,7 @@ Drawing.Painter = Drawing.Object.extend({
 	},
 
 	setStyle: function(style) {
-		this.style = style || new Drawing.Style();
+		this.style = style || new KChart.Style();
 		this.setCxtStyle();
 	},
 

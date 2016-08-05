@@ -1,23 +1,31 @@
-Drawing.myEvent = {
+KChart.CrossBrowserEvent = {
 
 	addListener: function(elem, type, handler) {
 
 		if(elem.addEventListener) {
-			elem.addEventListener(type, handler, false);
-		} else if(elem.attachEvent) {
-			elem.attachEvent("on" + type, handler);
+		    addListener = function (target, eventType, eventHandler) {
+		        target.addEventListener(eventType, eventHandler, false);
+		    }
+		} else if (elem.attachEvent) {
+		    addListener = function (target, eventType, eventHandler) {
+		        target.attachEvent("on" + eventType, eventHandler);
+		    }
 		} else {
+		    addListener = function (target, eventType, eventHandler) {
 
-			if(typeof elem["on" + type] === 'function') {
-				var oldHandler = elem["on" + type];
-				elem["on" + type] = function() {
-					oldHandler();
-					handler();
-				}
-			} else {
-				elem["on" + type] = handler;
-			}
+		        if (typeof target["on" + eventType] === 'function') {
+		            var oldHandler = target["on" + eventType];
+		            target["on" + eventType] = function () {
+		                oldHandler();
+		                eventHandler();
+		            }
+		        } else {
+		            target["on" + eventType] = eventHandler;
+		        }
+		    }
 		}
+
+		addListener(elem, type, handler);
 	},
 
 	getEvent: function(event) {
@@ -39,13 +47,21 @@ Drawing.myEvent = {
 
 	removeListener: function(elem, type, handler) {
 
-		if(elem.removeEventListener) {
-			elem.removeEventListener(type, handler, false);
-		} else if(elem.detachEvent) {
-			elem.detachEvent("on" + type, handler);
-		} else {
-			elem["on" + type] = null;
-		}
+	    if (elem.removeEventListener) {
+	        removeListener = function (target, eventType, eventHandler) {
+	            target.removeEventListener(eventType, eventHandler, false);
+	        }
+	    } else if (elem.detachEvent) {
+	        removeListener = function (target, eventType, eventHandler) {
+	            target.detachEvent("on" + eventType, eventHandler);
+	        }
+	    } else {
+	        removeListener = function (target, eventType, eventHandler) {
+	            target["on" + eventType] = null;
+	        }
+	    }
+
+	    removeListener(elem, type, handler);
 	},
 
 	stopPropagation: function(event) {

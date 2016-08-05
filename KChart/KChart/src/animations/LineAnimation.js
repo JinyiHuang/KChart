@@ -1,11 +1,11 @@
-Drawing.LineAnimation = Drawing.Animation.extend({
+KChart.LineAnimation = KChart.Animation.extend({
 
 	initialize: function(start, end, base, tween) {
 		this.constructor.__base__.initialize.apply(this, arguments);
 	},
 
 	drawAnimation: function(chart) {
-		var vertex = Drawing.Vertex,
+		var vertex = KChart.Vertex,
 			vertexes = chart.vertexes,
 			count = vertexes.length,
 			painter = chart.painter;
@@ -22,22 +22,22 @@ Drawing.LineAnimation = Drawing.Animation.extend({
 			(vertexes[index].x - vertexes[index + 1].x),
 			a = vertexes[index].y - k * vertexes[index].x;
 
-		Drawing.helper.requestAnimFrame.call(window, draw);
+		KChart.Helper.requestAnimFrame.call(window, draw);
 
 		function draw() {
 			t++;
 			var xCh = me.tween(t, b, c, d);
 
-			var line = new Drawing.PolyLine([vertexes[index], new Drawing.Vertex(xCh, k * xCh + a)]);
+			var line = new KChart.PolyLine([vertexes[index], new KChart.Vertex(xCh, k * xCh + a)]);
 			painter.draw(line);
 
 			if(t < d) {
-				Drawing.helper.requestAnimFrame.call(window, draw);
+				KChart.Helper.requestAnimFrame.call(window, draw);
 			} else {
 				index++;
 
 				if(index == count - 1) {
-					Drawing.helper.cancelAnimFrame.call(window, draw);
+					KChart.Helper.cancelAnimFrame.call(window, draw);
 				} else {
 
 					t = me.start,
@@ -49,7 +49,7 @@ Drawing.LineAnimation = Drawing.Animation.extend({
 						(vertexes[index].x - vertexes[index + 1].x),
 						a = vertexes[index].y - k * vertexes[index].x;
 
-					Drawing.helper.requestAnimFrame.call(window, draw);
+					KChart.Helper.requestAnimFrame.call(window, draw);
 				}
 			}
 		};

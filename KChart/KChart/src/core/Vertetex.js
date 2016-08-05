@@ -1,4 +1,4 @@
-Drawing.Vertex = Drawing.Object.extend({
+KChart.Vertex = KChart.Object.extend({
 	
 	initialize: function(x, y) {
 		this.x = x;

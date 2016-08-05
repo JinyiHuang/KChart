@@ -1,4 +1,4 @@
-Drawing.BarChart = Drawing.Chart.extend({
+KChart.BarChart = KChart.Chart.extend({
 
 	initialize: function(width, height, data, title) {
 		this.constructor.__base__.initialize.apply(this, arguments);
@@ -8,7 +8,7 @@ Drawing.BarChart = Drawing.Chart.extend({
 
 		this.constructor.__base__.draw.apply(this, arguments);
 
-		var helper = Drawing.helper,
+		var Helper = KChart.Helper,
 
 			height = this.height,
 			width = this.width,
@@ -28,15 +28,15 @@ Drawing.BarChart = Drawing.Chart.extend({
 			values.push(data[keys[i]]);
 		}
 
-		var max = helper.getMax(values),
+		var max = Helper.getMax(values),
 			unitWidth = this.unitWidth = width / count,
 			unitHeight = this.unitHeight = (height * 0.95) / max;
 
-		var vertex = Drawing.Vertex;
+		var vertex = KChart.Vertex;
 		var polygons = this.eles = [];
 
 		for(var i = 0; i < count; i++) {
-			var polygon = new Drawing.Polygon(
+			var polygon = new KChart.Polygon(
 				[new vertex((i + 0.25) * unitWidth + horizontalOffset, realHeight),
 					new vertex((i + 0.25) * unitWidth + horizontalOffset, realHeight - values[i] * unitHeight),
 					new vertex((i + 0.75) * unitWidth + horizontalOffset, realHeight - values[i] * unitHeight),
@@ -45,15 +45,15 @@ Drawing.BarChart = Drawing.Chart.extend({
 			polygons.push(polygon);
 		}
 
-		//helper.drawXYAxis(painter, offset / 2);
-		var axis = new Drawing.Axis(new vertex(horizontalOffset, realHeight), width, height, unitWidth, unitHeight);
+		//Helper.drawXYAxis(painter, offset / 2);
+		var axis = new KChart.Axis(new vertex(horizontalOffset, realHeight), width, height, unitWidth, unitHeight);
 		axis.drawXAxis(painter, keys);
 		axis.drawYAxis(painter, values);
 
 		painter.setStyle(oldStyle);
-		var animation = new Drawing.BarAnimation(0, 15);
+		var animation = new KChart.BarAnimation(0, 15);
 		animation.drawAnimation(this);
 
-		helper.addEvent(this, 'mousemove');
+		Helper.addEvent(this, 'mousemove');
 	}
 });

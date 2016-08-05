@@ -1,4 +1,4 @@
-Drawing.PolyLine = Drawing.Shape.extend({
+KChart.PolyLine = KChart.Shape.extend({
 	
 	getPerimeter: function() {
 		var perimeter = 0;

@@ -1,4 +1,4 @@
-Drawing.FanAnimation = Drawing.Animation.extend({
+KChart.FanAnimation = KChart.Animation.extend({
 
 	initialize: function(start, end, base, tween) {
 		this.constructor.__base__.initialize.apply(this, arguments);
@@ -20,29 +20,29 @@ Drawing.FanAnimation = Drawing.Animation.extend({
 		var center = fans[index].vertexes[0],
 			radius = fans[index].radius;
 
-		var newStyle = new Drawing.Style({
+		var newStyle = new KChart.Style({
 			weight: 0,
 			fill: true,
 			fillColor: colors[index]
 		});
 		painter.setStyle(newStyle);
 
-		Drawing.helper.requestAnimFrame.call(window, draw);
+		KChart.Helper.requestAnimFrame.call(window, draw);
 
 		function draw() {
 			t++;
 			var angelCh = me.tween(t, b, c, d);
 
-			var fan = new Drawing.Fan(center, radius, b, angelCh);
+			var fan = new KChart.Fan(center, radius, b, angelCh);
 			painter.draw(fan);
 
 			if(t < d) {
-				Drawing.helper.requestAnimFrame.call(window, draw);
+				KChart.Helper.requestAnimFrame.call(window, draw);
 			} else {
 				index++;
 
 				if(index == 6) {
-					Drawing.helper.cancelAnimFrame.call(window, draw);
+					KChart.Helper.cancelAnimFrame.call(window, draw);
 				} else {
 					t = me.start,
 						d = me.end,
@@ -52,14 +52,14 @@ Drawing.FanAnimation = Drawing.Animation.extend({
 					center = fans[index].vertexes[0],
 						radius = fans[index].radius;
 
-					newStyle = new Drawing.Style({
+					newStyle = new KChart.Style({
 						weight: 0,
 						fill: true,
 						fillColor: colors[index]
 					});
 					painter.setStyle(newStyle);
 
-					Drawing.helper.requestAnimFrame.call(window, draw);
+					KChart.Helper.requestAnimFrame.call(window, draw);
 				}
 			}
 		}
