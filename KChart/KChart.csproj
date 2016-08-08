@@ -69,7 +69,7 @@
     <Content Include="KChart\src\coordinates\CartesianCoordinate.js" />
     <Content Include="KChart\src\coordinates\PolarCoordinate.js" />
     <Content Include="KChart\src\core\Animation.js" />
-    <Content Include="KChart\src\core\Canvas.js" />
+    <Content Include="KChart\src\core\Graphics.js" />
     <Content Include="KChart\src\core\Chart.js" />
     <Content Include="KChart\src\core\Class.js" />
     <Content Include="KChart\src\core\Coordinate.js" />
@@ -77,11 +77,12 @@
     <Content Include="KChart\src\core\Handler.js" />
     <Content Include="KChart\src\core\Helper.js" />
     <Content Include="KChart\src\core\CrossBrowserEvent.js" />
-    <Content Include="KChart\src\core\Painting.js" />
+    <Content Include="KChart\src\core\Painter.js" />
     <Content Include="KChart\src\core\Shape.js" />
     <Content Include="KChart\src\core\Style.js" />
     <Content Include="KChart\src\core\Tween.js" />
     <Content Include="KChart\src\core\Vertetex.js" />
+    <Content Include="KChart\src\Graphics\CanvasGraphics.js" />
     <Content Include="KChart\src\handlers\HoverHandler.js" />
     <Content Include="KChart\src\KChart-min.js" />
     <Content Include="KChart\src\KChart.js" />
@@ -97,6 +98,7 @@
     <Content Include="KChart\test\point.test.js" />
     <Content Include="KChart\test\polygon.test.js" />
     <Content Include="KChart\test\polyLine.test.js" />
+    <Content Include="PainterTest.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

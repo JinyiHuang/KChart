@@ -24,16 +24,6 @@ KChart.Helper = {
 		return min;
 	},
 
-	//Transform the point's position from relative to client to relative to the canvas.
-	getPointOnCanvas: function(canvas, point) {
-		var bbox = canvas.getBoundingClientRect();
-
-		return {
-			x: point.x - bbox.left * (canvas.width / bbox.width),
-			y: point.y - bbox.top * (canvas.height / bbox.height)
-		};
-	},
-
 	//Add Event to chart
 	addEvent: function(chart, eventType) {
 

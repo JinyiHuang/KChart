@@ -7,7 +7,7 @@
 
     options: {
         stroke: true,
-        color: '#3388ff',
+        borderColor: '#3388ff',
         weight: 3,
         opacity: 1,
         lineCap: 'round',
@@ -17,6 +17,11 @@
         fill: false,
         fillColor: null,
         fillOpacity: 0.2,
-        fillRule: 'evenodd'
+        fillRule: 'evenodd',
+        fontFamily: "Arial",
+        fontSize: '12px',
+        fontColor: 'black',
+        textAlign: 'center',
+        textBaseline: 'bottom',
     }
 });
