@@ -81,7 +81,7 @@
     <Content Include="KChart\src\core\Shape.js" />
     <Content Include="KChart\src\core\Style.js" />
     <Content Include="KChart\src\core\Tween.js" />
-    <Content Include="KChart\src\core\Vertetex.js" />
+    <Content Include="KChart\src\core\Vertex.js" />
     <Content Include="KChart\src\Graphics\CanvasGraphics.js" />
     <Content Include="KChart\src\handlers\HoverHandler.js" />
     <Content Include="KChart\src\KChart-min.js" />
