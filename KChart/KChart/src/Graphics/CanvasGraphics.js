@@ -155,8 +155,8 @@
         this.ctx.transform(a, b, c, d, e, f);
     },
 
-    fillText: function (text, x, y, maxWidth) {
-        this.ctx.fillText(text, x, y, maxWidth);
+    fillText: function (text, x, y) {
+        this.ctx.fillText(text, x, y);
     },
 
     strokeText: function (text, x, y, maxWidth) {

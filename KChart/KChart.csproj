@@ -57,6 +57,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="CoordinatTest.html" />
     <Content Include="KChart\samples\bar.html" />
     <Content Include="KChart\samples\fan.html" />
     <Content Include="KChart\samples\line.html" />
@@ -82,7 +83,7 @@
     <Content Include="KChart\src\core\Style.js" />
     <Content Include="KChart\src\core\Tween.js" />
     <Content Include="KChart\src\core\Vertex.js" />
-    <Content Include="KChart\src\Graphics\CanvasGraphics.js" />
+    <Content Include="KChart\src\graphics\CanvasGraphics.js" />
     <Content Include="KChart\src\handlers\HoverHandler.js" />
     <Content Include="KChart\src\KChart-min.js" />
     <Content Include="KChart\src\KChart.js" />

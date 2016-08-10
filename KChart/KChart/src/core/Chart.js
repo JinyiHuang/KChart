@@ -34,38 +34,26 @@
 KChart.Chart = KChart.Object.extend({
 
     initialize: function (graphics, config) {
-        this.config = config || {
-            data: {
-                values: []
-            }
-        };
+        this.config = config || KChart.Chart.defaultConfig;
 
         if (!graphics) {
             throw Error("The Argument 'graphics' Cannot Be Null");
         }
-        if (!(graphics instanceof KChart.Graphics)) {
-            throw Error("The Argument should be the instance of KChart.Graphics");
-        }
         this.graphics = graphics;
 
-        if (this.config.grid) {
-            this.padingLeft = this.config.grid.left || KChart.Chart.defaultOptions.grid.left;
-            this.padingRight = this.config.grid.right || KChart.Chart.defaultOptions.grid.right;
-            this.padingTop = this.config.grid.top || KChart.Chart.defaultOptions.grid.top;
-            this.padingBottom = this.config.grid.bottom || KChart.Chart.defaultOptions.grid.bottom;
-        }
-        else {
-            this.padingLeft = KChart.Chart.defaultOptions.grid.left;
-            this.padingRight = KChart.Chart.defaultOptions.grid.right;
-            this.padingtTop = KChart.Chart.defaultOptions.grid.top;
-            this.padingBottom = KChart.Chart.defaultOptions.grid.bottom;
-        }
-        this.width = this.graphics.width * (1 - this.padingLeft - this.padingRight);
-        this.height = this.graphics.height * (1 - this.padingtTop - this.padingtTop);
+        var grid = this.config.grid || KChart.Chart.defaultConfig.grid,
+            defaultGrid = KChart.Chart.defaultConfig.grid;
+        this.padingLeft = grid.left || defaultGrid.left;
+        this.padingRight = grid.right || defaultGrid.right;
+        this.padingTop = grid.top || defaultGrid.top;
+        this.padingBottom = grid.bottom || defaultGrid.bottom;
 
-        this.elementCount = KChart.Helper.getMax(this.config.data.values.length, (
-                this.config.options && this.config.options.xAxis && this.config.options.xAxis.lables) ?
-                this.config.options.xAxis.lables.length : 0);
+        this.width = graphics.width * (1 - Number.parseFloat(this.padingLeft) / 100 - Number.parseFloat(this.padingRight) / 100);
+        this.height = graphics.height * (1 - Number.parseFloat(this.padingTop) / 100 - Number.parseFloat(this.padingBottom) / 100);
+
+        var valueLength = this.config.data.values.length,
+            labelLength = this.config.xAxis.labels.length;
+        this.elementCount = valueLength > labelLength ? valueLength : labelLength;
     },
 
     draw: function () {
@@ -73,32 +61,40 @@ KChart.Chart = KChart.Object.extend({
     },
 
     statics: {
-        defaultOptions: {
+        defaultConfig: {
             grid: {
-                left: '3%',
-                right: '3%',
-                top: '3%',
-                bottom: '3%'
+                left: '5%',
+                right: '5%',
+                top: '5%',
+                bottom: '5%'
             },
 
             xAxis: {
                 style: new KChart.Style({
                     borderColor: 'black',
-                    weight: '1px'
+                    weight: '1px',
+                    fill: true,
+                    fillColor: 'black'
                 }),
-                visable: true,
                 lables: []
             },
 
             yAxis: {
-                minValue: 0,
-                maxValue: Number.MAX_VALUE,
                 style: new KChart.Style({
                     borderColor: 'black',
                     weight: '1px',
                     textAlign: 'right'
                 }),
-                visable: true
+                valueLineStyle: new KChart.Style({
+                    borderColor: '#ccc',
+                    weight: '1px',
+                    fill: true,
+                    fillColor: 'black'
+                })
+            },
+
+            data: {
+                value: []
             }
         }
     }

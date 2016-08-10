@@ -62,15 +62,80 @@ KChart.BarChart = KChart.Chart.extend({
 
     initialize: function (graphics, config) {
         this.constructor.__base__.initialize.apply(this, arguments);
+
+        var graphics = this.graphics,
+            defaultConfig = KChart.Chart.defaultConfig;
+        var basePoint = new KChart.Vertex(graphics.width * Number.parseInt(this.padingLeft) / 100, graphics.height * Number.parseInt(this.padingTop) / 100 + this.height);
+        var xAxis = this.config.xAxis || defaultConfig.xAxis,
+            yAxis = this.config.yAxis || defaultConfig.yAxis;
+
+        xAxis.style = xAxis.style || defaultConfig.xAxis.style;
+        yAxis.style = yAxis.style || defaultConfig.yAxixs.style;
+        yAxis.valueLineStyle = yAxis.valueLineStyle || defaultConfig.yAxis.valueLineStyle;
+        yAxis.values = this.config.data.values;
+
+        this.coordinate = new KChart.CartesianCoordinate(basePoint, this.width, this.height, xAxis, yAxis, this.elementCount);
     },
 
     draw: function () {
 
         this.constructor.__base__.draw.apply(this, arguments);
 
-        var basePoint = new KChart.Vertex(this.graphics.width * this.padingLeft, this.graphics.height * this.padingTop + this.height);
-        var xAxis = this.options.xAxis || KChart.Chart.defaultOptions.xAixs;
+        var painter = new KChart.Painter(this.graphics, new KChart.Style());
 
-        var coordinate = new KChart.CartesianCoordinate();
+        this.coordinate.draw(painter);
+
+        var Vertex = KChart.Vertex;
+        var polygons = this.elements = [];
+        var data = this.config.data,
+            defaultData = KChart.BarChart.defaultConfig.data;
+
+        if (data.values.length == 0) {
+            return;
+        }
+
+        var values = data.values,
+            barWidth = Number.parseFloat(data.barWidth || defaultData.barWidth) / 100,
+            unitWidth = this.coordinate.unitWidth,
+            basePoint = this.coordinate.basePoint,
+            axisTickX = this.coordinate.axisTickX,
+            axisTickY = this.coordinate.axisTickY;
+
+        var styles = data.styles || defaultData.style;
+        if (!Array.isArray(styles)) {
+            var tempStyle = styles;
+            styles = [];
+            for (var i = 0; i < values.length; i++) {
+                styles[i] = tempStyle;
+            }
+        }
+
+        var lbPoint, ltPoint, rtPoint, rbPoint;
+        var halfUnitWidth = unitWidth * barWidth / 2;
+        for (i = 0; i < values.length; i++) {
+            lbPoint = new Vertex(axisTickX[i] - halfUnitWidth, basePoint.y);
+            ltPoint = new Vertex(axisTickX[i] - halfUnitWidth, axisTickY[i]);
+            rtPoint = new Vertex(axisTickX[i] + halfUnitWidth, axisTickY[i]);
+            rbPoint = new Vertex(axisTickX[i] + halfUnitWidth, basePoint.y);
+            polygons[i] = { shape: new KChart.Polygon([lbPoint, ltPoint, rtPoint, rbPoint]), style: styles[i] };
+        }
+        for (i = 0; i < values.length; i++) {
+            painter.setStyle(polygons[i].style);
+            painter.draw(polygons[i].shape);
+        }
+    },
+
+    statics: {
+        defaultConfig: {
+            data: {
+                value: [],
+                barWidth: '60%',
+                style: new KChart.Style({
+                    stroke: false,
+                    fill: true,
+                    fillColor: "#3398DB"
+                })
+            }
+        }
     }
 });

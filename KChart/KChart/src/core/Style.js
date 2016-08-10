@@ -7,15 +7,15 @@
 
     options: {
         stroke: true,
-        borderColor: '#3388ff',
-        weight: 3,
+        borderColor: 'black',
+        weight: 1,
         opacity: 1,
         lineCap: 'round',
         lineJoin: 'round',
         dashArray: null,
         dashOffset: null,
         fill: false,
-        fillColor: null,
+        fillColor: 'black',
         fillOpacity: 0.2,
         fillRule: 'evenodd',
         fontFamily: "Arial",
