@@ -75,6 +75,12 @@ KChart.CartesianCoordinate = KChart.Coordinate.extend({
     draw: function (painter) {
         this.drawXAxis(painter);
         this.drawYAxis(painter);
+        this.drawValueLine(painter);
+    },
+
+    drawWithoutValueLine:function(painter){
+        this.drawXAxis(painter);
+        this.drawYAxis(painter);
     },
 
     drawXAxis: function (painter) {
@@ -126,6 +132,14 @@ KChart.CartesianCoordinate = KChart.Coordinate.extend({
             painter.drawText(this.yAxis.values[i], basePoint.x - this.width * 0.01, axisTickY[i]);
         }
 
+        painter.setStyle(oldStyle);
+    },
+
+    drawValueLine: function (painter) {
+        var oldStyle = painter.style;
+        var Vertex = KChart.Vertex,
+            basePoint = this.basePoint,
+            axisTickY = this.axisTickY;
         painter.setStyle(this.yAxis.valueLineStyle);
         var valueLine;
         for (i = 0; i < this.elementCount; i++) {

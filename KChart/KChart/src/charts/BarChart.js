@@ -119,9 +119,19 @@ KChart.BarChart = KChart.Chart.extend({
             rbPoint = new Vertex(axisTickX[i] + halfUnitWidth, basePoint.y);
             polygons[i] = { shape: new KChart.Polygon([lbPoint, ltPoint, rtPoint, rbPoint]), style: styles[i] };
         }
-        for (i = 0; i < values.length; i++) {
-            painter.setStyle(polygons[i].style);
-            painter.draw(polygons[i].shape);
+        //for (i = 0; i < values.length; i++) {
+        //    painter.setStyle(polygons[i].style);
+        //    painter.draw(polygons[i].shape);
+        //}
+        var animation = new KChart.BarAnimation(0, 30);
+        animation.begin(painter, this);
+
+        var event = this.config.event,
+            defaultEvent = KChart.Chart.defaultConfig.event;
+        if (event && event.hover && event.hover.enable) {
+            var tooltipStyle = event.hover.tooltipStyle || defaultEvent.hover.tooltipStyle;
+            var handler = new KChart.HoverHandler(this, tooltipStyle);
+            KChart.Event.addEvent(this, "mousemove", handler.handle.bind(handler));
         }
     },
 

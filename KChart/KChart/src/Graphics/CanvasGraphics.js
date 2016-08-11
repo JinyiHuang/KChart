@@ -168,7 +168,7 @@
     },
 
     getPointOnGraphics: function (point) {
-        var bbox = this.getBoundingClientRect();
+        var bbox = this.ctx.canvas.getBoundingClientRect();
 
         return {
             x: point.x - bbox.left * (this.width / bbox.width),

@@ -6,5 +6,7 @@ KChart.Animation = KChart.Object.extend({
 		this.tween = tween || KChart.Tween.Linear;
 	},
 
-	drawAnimation: function(chart) {}
+	begin: function () { },
+
+	terminate: function () { }
 });

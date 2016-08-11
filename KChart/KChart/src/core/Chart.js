@@ -95,6 +95,17 @@ KChart.Chart = KChart.Object.extend({
 
             data: {
                 value: []
+            },
+
+            event: {
+                hover: {
+                    enable: false,
+                    tooltipStyle: new KChart.Style({
+                        fillColor: "rgba(50, 50, 50, 0.701961)",
+                        fontColor: "#fff",
+                        fontSize: '14px'
+                    })
+                }
             }
         }
     }
