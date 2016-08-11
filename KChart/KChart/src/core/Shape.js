@@ -1,43 +1,43 @@
 KChart.Shape = KChart.Object.extend({
-	
-	initialize: function(vertexes) {
-		
-		if(!Array.isArray(vertexes)) {
-			console.log("the type of argument should be [Array]");
-		}
 
-		this.vertexes = vertexes;
-	},
+    initialize: function (vertexes) {
 
-	getPerimeter: function() {
-		console.log("not implemented.");
-	},
+        if (!Array.isArray(vertexes)) {
+            console.log("the type of argument should be [Array]");
+        }
 
-	getArea: function() {
-		console.log("not implemented.");
-	},
+        this.vertexes = vertexes;
+    },
 
-	resize: function(vertexIndex, multiple) {
-		
-		if(vertexIndex > this.vertexes.length - 1) {
-			console.log("Index out of arrange");
-		}
+    getPerimeter: function () {
+        console.log("not implemented.");
+    },
 
-		var standardVertex = this.vertexes[vertexIndex];
+    getArea: function () {
+        console.log("not implemented.");
+    },
 
-		for(var i = 0; i < this.vertexes.length; i++) {
-			this.vertexes[i].x = standardVertex.x -
+    resize: function (vertexIndex, multiple) {
+
+        if (vertexIndex > this.vertexes.length - 1) {
+            console.log("Index out of arrange");
+        }
+
+        var standardVertex = this.vertexes[vertexIndex];
+
+        for (var i = 0; i < this.vertexes.length; i++) {
+            this.vertexes[i].x = standardVertex.x -
 				(standardVertex.x - this.vertexes[i].x) * multiple;
-			this.vertexes[i].y = standardVertex.y -
+            this.vertexes[i].y = standardVertex.y -
 				(standardVertex.y - this.vertexes[i].y) * multiple;
-		}
-	},
+        }
+    },
 
-	move: function(veticalOffset, horizontalOffset) {
-		
-		for(var i = 0; i < this.vertexes.length; i++) {
-			this.vertexes[i].x += veticalOffset;
-			this.vertexes[i].y += horizontalOffset;
-		}
-	}
+    move: function (veticalOffset, horizontalOffset) {
+
+        for (var i = 0; i < this.vertexes.length; i++) {
+            this.vertexes[i].x += veticalOffset;
+            this.vertexes[i].y += horizontalOffset;
+        }
+    }
 });

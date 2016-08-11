@@ -15,14 +15,6 @@
             this.ctx = ctx;
         }
 
-        //this._fillStyle = null;
-        //this._strokeStyle = null;
-        //this._lineCap = null;
-        //this._lineWidth = null;
-        //this._lineJoin = null;
-        //this._font = null;
-        //this._textAlign = null;
-        //this._textBaseline = null;
         Object.defineProperties(this, {
             'fillStyle': {
                 get: function () {

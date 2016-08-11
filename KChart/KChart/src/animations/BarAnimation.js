@@ -4,6 +4,73 @@ KChart.BarAnimation = KChart.Animation.extend({
         this.constructor.__base__.initialize.apply(this, arguments);
     },
 
+    draw: function () {
+        var Vertex = KChart.Vertex,
+            painter = this.painter,
+            elements = this.elements,
+            coordinate = this.coordinate,
+            tween = this.tween,
+            end = this.end,
+            beginValues = this.beginValues,
+            variations = this.variations,
+            xLeft = this.xLeft,
+            xRight = this.xRight;
+
+        var yChange, polygon;
+        this.start++;
+
+        var graphics = painter.graphics;
+        graphics.clearRect(0, 0, graphics.width, graphics.height);
+        coordinate.draw(painter);
+
+        for (var i = 0; i < elements.length; i++) {
+            yChange = tween(this.start, beginValues[i], variations[i], end);
+            polygon = new KChart.Polygon([
+                    new Vertex(xLeft[i], beginValues[i]),
+                    new Vertex(xLeft[i], yChange),
+                    new Vertex(xRight[i], yChange),
+                    new Vertex(xRight[i], beginValues[i])]);
+            painter.setStyle(elements[i].style);
+            painter.draw(polygon);
+        }
+
+        if (this.start < end) {
+            KChart.CrossBrowserAnimFrame.requestAnimFrame.call(window, this.draw.bind(this));
+        }
+        else {
+            graphics.clearRect(0, 0, graphics.width, graphics.height);
+            coordinate.drawValueLine(painter);
+            for (i = 0; i < elements.length; i++) {
+                painter.setStyle(elements[i].style);
+                painter.draw(elements[i].shape);
+            }
+            coordinate.drawWithoutValueLine(painter);
+        }
+    },
+
+    begin: function (painter, chart) {
+        this.painter = painter;
+        var elements = this.elements = chart.elements;
+        this.coordinate = chart.coordinate;
+        var bv = this.beginValues = [],
+            variations = this.variations = [],
+            xl = this.xLeft = [],
+            xr = this.xRight = [];
+        for (var i = 0; i < elements.length; i++) {
+            bv[i] = elements[i].shape.vertexes[0].y;
+            variations[i] = elements[i].shape.vertexes[1].y - bv[i];
+            xl[i] = elements[i].shape.vertexes[0].x;
+            xr[i] = elements[i].shape.vertexes[3].x;
+        }
+
+        console.log(Date.now());
+        KChart.CrossBrowserAnimFrame.requestAnimFrame.call(window, this.draw.bind(this));
+    },
+
+    //terminate: function () {
+    //    KChart.CrossBrowserAnimFrame.cancelAnimFrame.call(window, this.draw.bind(this));
+    //}
+
     //drawAnimation: function(chart) {
     //	var height = chart.height,
     //		width = chart.width,
@@ -57,66 +124,4 @@ KChart.BarAnimation = KChart.Animation.extend({
     //	};
     //}
 
-    draw: function () {
-        var Vertex = KChart.Vertex,
-            painter = this.painter,
-            elements = this.elements,
-            coordinate = this.coordinate,
-            tween = this.tween,
-            end = this.end,
-            beginValues = this.beginValues,
-            variations = this.variations,
-            xLeft = this.xLeft,
-            xRight = this.xRight;
-
-        var yChange, polygon;
-        this.start++;
-
-        var graphics = painter.graphics;
-        graphics.clearRect(0, 0, graphics.ctx.canvas.width, graphics.ctx.canvas.height);
-        coordinate.draw(painter);
-
-        for (var i = 0; i < elements.length; i++) {
-            yChange = tween(this.start, beginValues[i], variations[i], end);
-            polygon = new KChart.Polygon([new Vertex(xLeft[i], beginValues[i]), new Vertex(xLeft[i], yChange), new Vertex(xRight[i], yChange), new Vertex(xRight[i], beginValues[i])]);
-            painter.setStyle(elements[i].style);
-            painter.draw(polygon);
-        }
-
-        if (this.start < end) {
-            KChart.CrossBrowserAnimFrame.requestAnimFrame.call(window, this.draw.bind(this));
-        }
-        else {
-            graphics.clearRect(0, 0, graphics.ctx.canvas.width, graphics.ctx.canvas.height);
-            coordinate.drawValueLine(painter);
-            for (i = 0; i < elements.length; i++) {
-                painter.setStyle(elements[i].style);
-                painter.draw(elements[i].shape);
-            }
-            coordinate.drawWithoutValueLine(painter);
-        }
-    },
-
-    begin: function (painter, chart) {
-        this.painter = painter;
-        var elements = this.elements = chart.elements;
-        this.coordinate = chart.coordinate;
-        var bv = this.beginValues = [],
-            variations = this.variations = [],
-            xl = this.xLeft = [],
-            xr = this.xRight = [];
-        for (var i = 0; i < elements.length; i++) {
-            bv[i] = elements[i].shape.vertexes[0].y;
-            variations[i] = elements[i].shape.vertexes[1].y - bv[i];
-            xl[i] = elements[i].shape.vertexes[0].x;
-            xr[i] = elements[i].shape.vertexes[3].x;
-        }
-
-        console.log(Date.now());
-        KChart.CrossBrowserAnimFrame.requestAnimFrame.call(window, this.draw.bind(this));
-    },
-
-    //terminate: function () {
-    //    KChart.CrossBrowserAnimFrame.cancelAnimFrame.call(window, this.draw.bind(this));
-    //}
 });

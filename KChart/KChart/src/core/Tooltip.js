@@ -11,6 +11,7 @@
         div.style.fontFamily = style.fontFamily;
         div.style.color = style.fontColor;
         div.style.padding = '3px 5px';
+        div.style.display = 'none';
         div.zIndex = 888;
         document.body.appendChild(div);
     },

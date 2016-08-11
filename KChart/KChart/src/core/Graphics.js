@@ -1,12 +1,12 @@
 ﻿KChart.Graphics = KChart.Object.extend({
 
     initialize: function () {
-        
+
     },
 
     width: 0,
     height: 0,
-    bgColor:'white',
+    bgColor: 'white',
     fillStyle: function (fillstyle) { },
     strokeStyle: function (strokestyle) { },
     lineCap: function (linecap) { },
@@ -33,7 +33,7 @@
     textBaseline: function (textbaseline) { },
     fillText: function (text, x, y, maxWidth) { },
     strokeText: function (text, x, y, maxWidth) { },
-    
+
     //Transform the point's position from relative to client to relative to the canvas.
     getPointOnGraphics: function (point) { }
 });
