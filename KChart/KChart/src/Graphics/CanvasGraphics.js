@@ -159,6 +159,10 @@
         this.ctx.setLineDash(dashArray);
     },
 
+    createLinearGradient: function (x0, y0, x1, y1) {
+        this.ctx.createLinearGradient(x0, y0, x1, y1);
+    },
+
     getPointOnGraphics: function (point) {
         var bbox = this.ctx.canvas.getBoundingClientRect();
 

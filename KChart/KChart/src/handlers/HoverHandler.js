@@ -73,9 +73,9 @@ KChart.HoverHandler = KChart.Handler.extend({
 			mouseY = mp.y;
 
         for (var i = 0; i < eles.length; i++) {
-            var x = eles[i].shape.vertexes[0].x,
-				y = eles[i].shape.vertexes[0].y,
-				radius = eles[i].radius;
+            var x = eles[i].shape.center.x,
+				y = eles[i].shape.center.y,
+				radius = eles[i].shape.radius;
 
             if ((Math.pow(mouseX - x, 2) + Math.pow(mouseY - y, 2)) <= Math.pow(radius, 2)) {
                 return i;

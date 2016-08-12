@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="KChart/src/KChart.js"></script>
+</head>
+<body>
+    <canvas id="canvas" height="800" width="800"></canvas>
+    <script>
+        var canvas = document.getElementById('canvas');
+        var graphics = new KChart.CanvasGraphics(canvas);
+        var lineChart = new KChart.LineChart(graphics, {
+            data: {
+                values: [10, 50, 100, 500, 450, 230, 120]
+            },
+            xAxis: {
+                labels: ['aa', 'bb', 'cc', 'dd', 'ee', 'ff', 'gg']
+            },
+            event: {
+                hover: {
+                    enable: true
+                }
+            }
+        });
+        lineChart.draw();
+    </script>
+</body>
+</html>

@@ -61,7 +61,7 @@
         "charts/LineChart.js",
         "animations/BarAnimation.js",
         //"animations/FanAnimation.js",
-        //"animations/LineAnimation.js",
+        "animations/LineAnimation.js",
         "handlers/HoverHandler.js",
         "core/Tooltip.js"
     ];
