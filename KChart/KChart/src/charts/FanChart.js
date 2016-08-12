@@ -1,7 +1,12 @@
 KChart.FanChart = KChart.Chart.extend({
 
 	initialize: function(width, height, data, title) {
-		this.constructor.__base__.initialize.apply(this, arguments);
+	    this.constructor.__base__.initialize.apply(this, arguments);
+
+	    var graphics = this.graphics,
+            config = this.config,
+            defaultConfig = KChart.Chart.defaultConfig;
+
 	},
 
 	draw: function(canvas, style) {

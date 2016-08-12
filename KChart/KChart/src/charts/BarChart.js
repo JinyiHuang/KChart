@@ -4,16 +4,17 @@ KChart.BarChart = KChart.Chart.extend({
         this.constructor.__base__.initialize.apply(this, arguments);
 
         var graphics = this.graphics,
+            config = this.config,
             defaultConfig = KChart.Chart.defaultConfig;
         var basePoint = new KChart.Vertex(graphics.width * Number.parseInt(this.padingLeft) / 100,
                 graphics.height * Number.parseInt(this.padingTop) / 100 + this.height);
-        var xAxis = this.config.xAxis || defaultConfig.xAxis,
-            yAxis = this.config.yAxis || defaultConfig.yAxis;
+        var xAxis = config.xAxis || defaultConfig.xAxis,
+            yAxis = config.yAxis || defaultConfig.yAxis;
 
         xAxis.style = xAxis.style || defaultConfig.xAxis.style;
         yAxis.style = yAxis.style || defaultConfig.yAxixs.style;
         yAxis.valueLineStyle = yAxis.valueLineStyle || defaultConfig.yAxis.valueLineStyle;
-        yAxis.values = this.config.data.values;
+        yAxis.values = config.data.values;
 
         this.coordinate = new KChart.CartesianCoordinate(basePoint, this.width, this.height, xAxis, yAxis, this.elementCount);
     },
