@@ -1,30 +1,12 @@
-### Usage
-
-To import KChart.js using an script tag:
-
-```html
-<script src="KChart-min.js"></script>
-```
-
-### Creating a Chart
-
-To create a chart, we need to instantiate the subclass of `Graphics` class. To do this, we need to pass in the canvas of where we want to draw the chart. Here's an example.
-
-```html
-<canvas id="myChart" width="400" height="400"></canvas>
-```
-
-```javascript
-var ctx = document.getElementById("myChart");
-var graphics = new KChart.CanvasGraphics(ctx);
-```
-
-
-The following example instantiates a bar chart.
-
-```html
-<canvas id="canvas" height="800" width="800"></canvas>
-<script>
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="../src/KChart.js"></script>
+</head>
+<body>
+    <canvas id="canvas" height="800" width="800"></canvas>
+    <script>
         var Style = KChart.Style;
         var canvas = document.getElementById('canvas');
         var graphics = new KChart.CanvasGraphics(canvas);
@@ -112,30 +94,6 @@ The following example instantiates a bar chart.
             }
         });
         barChart.draw();
-</script>
-```
-If you don't want to create a specific chart, you can also just pass in the data and use the default config:
-
-```html
-<canvas id="canvas" height="800" width="800"></canvas>
-<script>
-        var canvas = document.getElementById('canvas');
-        var graphics = new KChart.CanvasGraphics(canvas);
-        var lineChart = new KChart.LineChart(graphics, {
-            data: {
-                values: [10, 50, 100, 500, 450, 230, 120]
-            },
-            xAxis: {
-                labels: ['aa', 'bb', 'cc', 'dd', 'ee', 'ff', 'gg']
-            },
-            event: {
-                hover: {
-                    enable: true
-                }
-            }
-        });
-        lineChart.draw();
-</script>
-```
-
-It's that easy to get started using KChart.js! From here you can explore the many options that can help you customise your charts with colors, custom actions, and much more.
+    </script>
+</body>
+</html>

@@ -23,4 +23,12 @@ KChart.Helper = {
 
         return min;
     },
+
+    sum: function (values) {
+        var amount = 0;
+        for (var i = 0; i < values.length; i++) {
+            amount += values[i];
+        }
+        return amount;
+    }
 };

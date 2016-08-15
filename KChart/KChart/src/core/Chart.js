@@ -43,7 +43,7 @@ KChart.Chart = KChart.Object.extend({
                     fill: true,
                     fillColor: 'black'
                 }),
-                lables: []
+                labels: []
             },
 
             yAxis: {

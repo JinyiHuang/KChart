@@ -1,69 +1,77 @@
 KChart.FanChart = KChart.Chart.extend({
 
-	initialize: function(width, height, data, title) {
-	    this.constructor.__base__.initialize.apply(this, arguments);
+    initialize: function (width, height, data, title) {
+        this.constructor.__base__.initialize.apply(this, arguments);
 
-	    var graphics = this.graphics,
+        var graphics = this.graphics,
+            width = this.width,
+            height = this.height,
             config = this.config,
             defaultConfig = KChart.Chart.defaultConfig;
 
-	},
+        var centerPrecent = config.center || defaultConfig.center;
+        var left = (graphics.width * Number.parseFloat(this.padingLeft) + width * Number.parseFloat(centerPrecent[0])) / 100,
+            top = (graphics.height * Number.parseFloat(this.padingTop) + height * Number.parseFloat(centerPrecent[1])) / 100;
+        this.center = new KChart.Vertex(left, top);
 
-	draw: function(canvas, style) {
+        var radiusPrecent = config.radius || defaultConfig.radius;
+        this.maxRadius = width < height ? width * Number.parseFloat(radiusPrecent) / 100 : height * Number.parseFloat(radiusPrecent) / 100;
+    },
 
-		this.constructor.__base__.draw.apply(this, arguments);
+    draw: function (canvas, style) {
 
-		var Helper = KChart.Helper,
+        this.constructor.__base__.draw.apply(this, arguments);
 
-			painter = this.painter,
-			oldStyle = painter.style;
+        var painter = new KChart.Painter(this.graphics, new KChart.Style());
 
-		var centerX = this.width / 2 + this.horizontalOffset,
-			centerY = this.height / 2 + this.verticalOffset,
-			radius = centerX < centerY ? centerX * 0.8 : centerY * 0.8,
-			data = this.data;
+        var Vertex = KChart.Vertex;
+        var fans = this.elements = [];
+        var data = this.config.data,
+            defaultData = KChart.BarChart.defaultConfig.data;
+        var values = data.values;
 
-		var keys = this.keys = Object.keys(data),
-			count = keys.length,
-			values = this.values = [],
-			amount = 0;
+        if (values.length == 0) {
+            return;
+        }
 
-		for(var i = 0; i < count; i++) {
-			values.push(data[keys[i]]);
-			amount += data[keys[i]];
-		}
+        var styles = data.styles || defaultData.style;
+        if (!Array.isArray(styles)) {
+            var tempStyle = styles;
+            styles = [];
+            for (var i = 0; i < values.length; i++) {
+                styles[i] = tempStyle;
+            }
+        }
 
-		var max = Helper.getMax(values);
+        var amount = KChart.Helper.sum(values),
+            max = KChart.Helper.getMax(values);
 
-		var vertex = KChart.Vertex;
-		var fans = this.eles = [],
-			colors = this.colors = [];
+        var center = this.center,
+            radius = this.maxRadius,
+            sAngle = 0,
+			eAngle,
+            realRadius;
 
-		var sAngle = 0,
-			eAngle, realRadius;
-		var newStyle;
+        for (var i = 0; i < values.length; i++) {
+            realRadius = radius * (values[i] / max);
+            eAngle = (values[i] / amount) * 2 * Math.PI + sAngle;
 
-		for(var i = 0; i < count; i++) {
-			realRadius = radius * (values[i] / max);
-			eAngle = (values[i] / amount) * 2 * Math.PI + sAngle;
+            var fan = new KChart.Fan(center, realRadius, sAngle, eAngle);
+            fans[i] = { shape: fan, style: styles[i] };
 
-			var fan = new KChart.Fan(new KChart.Vertex(centerX, centerY), realRadius, sAngle, eAngle);
-			fans.push(fan);
+            sAngle = eAngle;
+        }
 
-			sAngle = eAngle;
+        var animation = new KChart.FanAnimation(0, 30);
+        animation.begin(painter, this);
 
-			var rRandom = Math.round(Math.random() * 255),
-				gRandom = Math.round(Math.random() * 255),
-				bRandom = Math.round(Math.random() * 255);
-			var colorStr = 'rgb(' + rRandom + ',' + gRandom + ',' + bRandom + ')';
-			colors.push(colorStr);
-		}
-
-		painter.setStyle(oldStyle);
-		var animation = new KChart.FanAnimation(0, 15);
-		animation.drawAnimation(this);
-
-		Helper.addEvent(this, 'mousemove');
-	}
+        var event = this.config.event,
+            defaultEvent = KChart.Chart.defaultConfig.event;
+        if (event && event.hover && event.hover.enable) {
+            var tooltipStyle = event.hover.tooltipStyle || defaultEvent.hover.tooltipStyle;
+            var handler = new KChart.HoverHandler(this, tooltipStyle);
+            KChart.Event.addEvent(this, "mousemove", handler.handle.bind(handler));
+        }
+    }
 
 });

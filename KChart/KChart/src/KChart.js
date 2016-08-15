@@ -1,3 +1,8 @@
+var KChart = {
+    version: 2.0
+}; //As namespace
+
+
 /// <reference path="core/Animation.js" />
 /// <reference path="core/Chart.js" />
 /// <reference path="core/Class.js" />
@@ -34,18 +39,18 @@
     var jsFiles = [
         "core/Class.js",
         "core/Helper.js",
-        "core/CrossBrowserAnimFrame.js",
-        "core/CrossBrowserEvent.js",
+        "CrossBrowser/CrossBrowserAnimFrame.js",
+        "CrossBrowser/CrossBrowserEvent.js",
         "core/Tween.js",
         "core/Vertex.js",
-        "core/Shape.js",
-        "core/Graphics.js",
+        "shapes/Shape.js",
+        "graphics/Graphics.js",
         "core/Style.js",
         "core/Painter.js",
-        "core/Coordinate.js",
+        "coordinates/Coordinate.js",
         "core/Chart.js",
-        "core/Animation.js",
-        "core/Handler.js",
+        "animations/Animation.js",
+        "handlers/Handler.js",
         "core/Event.js",
         "graphics/CanvasGraphics.js",
         "shapes/Arc.js",
@@ -60,14 +65,14 @@
         "charts/FanChart.js",
         "charts/LineChart.js",
         "animations/BarAnimation.js",
-        //"animations/FanAnimation.js",
+        "animations/FanAnimation.js",
         "animations/LineAnimation.js",
         "handlers/HoverHandler.js",
         "core/Tooltip.js"
     ];
 
     var scriptTags = new Array(jsFiles.length);
-    var host = "KChart/src/";
+    var host = "../src/";
     for (var i = 0, len = jsFiles.length; i < len; i++) {
         scriptTags[i] = "<script src='" + host + jsFiles[i] +
                                "'></script>";

@@ -1,5 +1,3 @@
-var KChart = {}; //As namespace
-
 KChart.Util = {
 
 	extend: function(dist) {

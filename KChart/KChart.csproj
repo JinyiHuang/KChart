@@ -57,10 +57,8 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="BarChartTest.html" />
-    <Content Include="KChart\samples\bar.html" />
-    <Content Include="KChart\samples\fan.html" />
-    <Content Include="KChart\samples\line.html" />
+    <Content Include="KChart\samples\BarChartTest.html" />
+    <Content Include="KChart\samples\FanChartTest.html" />
     <Content Include="KChart\src\animations\BarAnimation.js" />
     <Content Include="KChart\src\animations\FanAnimation.js" />
     <Content Include="KChart\src\animations\LineAnimation.js" />
@@ -69,18 +67,18 @@
     <Content Include="KChart\src\charts\LineChart.js" />
     <Content Include="KChart\src\coordinates\CartesianCoordinate.js" />
     <Content Include="KChart\src\coordinates\PolarCoordinate.js" />
-    <Content Include="KChart\src\core\Animation.js" />
+    <Content Include="KChart\src\animations\Animation.js" />
     <Content Include="KChart\src\core\Event.js" />
-    <Content Include="KChart\src\core\Graphics.js" />
+    <Content Include="KChart\src\graphics\Graphics.js" />
     <Content Include="KChart\src\core\Chart.js" />
     <Content Include="KChart\src\core\Class.js" />
-    <Content Include="KChart\src\core\Coordinate.js" />
-    <Content Include="KChart\src\core\CrossBrowserAnimFrame.js" />
-    <Content Include="KChart\src\core\Handler.js" />
+    <Content Include="KChart\src\coordinates\Coordinate.js" />
+    <Content Include="KChart\src\CrossBrowser\CrossBrowserAnimFrame.js" />
+    <Content Include="KChart\src\handlers\Handler.js" />
     <Content Include="KChart\src\core\Helper.js" />
-    <Content Include="KChart\src\core\CrossBrowserEvent.js" />
+    <Content Include="KChart\src\CrossBrowser\CrossBrowserEvent.js" />
     <Content Include="KChart\src\core\Painter.js" />
-    <Content Include="KChart\src\core\Shape.js" />
+    <Content Include="KChart\src\shapes\Shape.js" />
     <Content Include="KChart\src\core\Style.js" />
     <Content Include="KChart\src\core\Tooltip.js" />
     <Content Include="KChart\src\core\Tween.js" />
@@ -101,8 +99,7 @@
     <Content Include="KChart\test\point.test.js" />
     <Content Include="KChart\test\polygon.test.js" />
     <Content Include="KChart\test\polyLine.test.js" />
-    <Content Include="LineChartTest.html" />
-    <Content Include="PainterTest.html" />
+    <Content Include="KChart\samples\LineChartTest.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
