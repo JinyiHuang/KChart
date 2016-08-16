@@ -1,46 +1,54 @@
 KChart.LineChart = KChart.Chart.extend({
 
     initialize: function (graphics, config) {
-        this.constructor.__base__.initialize.apply(this, arguments);
+        var me = this;
+        this.constructor.__base__.initialize.apply(me, arguments);
 
-        var graphics = this.graphics,
+        var graphics = me.graphics,
+            config = me.config,
             defaultConfig = KChart.Chart.defaultConfig;
-        var basePoint = new KChart.Vertex(graphics.width * Number.parseInt(this.padingLeft) / 100,
-                graphics.height * Number.parseInt(this.padingTop) / 100 + this.height);
-        var xAxis = this.config.xAxis || defaultConfig.xAxis,
-            yAxis = this.config.yAxis || defaultConfig.yAxis;
+        var basePoint = new KChart.Vertex(graphics.width * Number.parseInt(me.padingLeft) / 100,
+                graphics.height * Number.parseInt(this.padingTop) / 100 + me.height);
+        var xAxis = config.xAxis || defaultConfig.xAxis,
+            yAxis = config.yAxis || defaultConfig.yAxis;
 
         xAxis.style = xAxis.style || defaultConfig.xAxis.style;
         yAxis.style = yAxis.style || defaultConfig.yAxixs.style;
         yAxis.valueLineStyle = yAxis.valueLineStyle || defaultConfig.yAxis.valueLineStyle;
-        yAxis.values = this.config.data.values;
+        yAxis.values = config.data.values;
 
-        this.coordinate = new KChart.CartesianCoordinate(basePoint, this.width, this.height, xAxis, yAxis, this.elementCount);
+        me.coordinate = new KChart.CartesianCoordinate(basePoint, me.width, me.height, xAxis, yAxis, me.elementCount);
     },
 
     draw: function () {
+        var me = this;
+        me.constructor.__base__.draw.apply(me, arguments);
 
-        this.constructor.__base__.draw.apply(this, arguments);
+        var Vertex = KChart.Vertex,
+            Circle = KChart.Circle,
+            coordinate = me.coordinate,
+            config = me.config,
+            defaultConfig = KChart.Chart.defaultConfig,
+            lineDefaultConfig = KChart.LineChart.defaultConfig;
 
-        var painter = new KChart.Painter(this.graphics, new KChart.Style());
+        var painter = new KChart.Painter(me.graphics);
 
-        this.coordinate.draw(painter);
+        coordinate.draw(painter);
 
-        var Vertex = KChart.Vertex;
-        var dots = this.elements = [];
-        var data = this.config.data,
-            defaultData = KChart.LineChart.defaultConfig.data;
+        var dots = me.elements = [];
+        var data = config.data,
+            defaultData = lineDefaultConfig.data;
 
         if (!data.values.length) {
             return;
         }
 
         var values = data.values,
-            axisTickX = this.coordinate.axisTickX,
-            axisTickY = this.coordinate.axisTickY;
+            axisTickX = coordinate.axisTickX,
+            axisTickY = coordinate.axisTickY;
 
         var styles = data.styles || defaultData.style;
-        this.lineStyle = data.lineStyle || defaultData.lineStyle;
+        me.lineStyle = data.lineStyle || defaultData.lineStyle;
         if (!Array.isArray(styles)) {
             var tempStyle = styles;
             styles = [];
@@ -49,23 +57,38 @@ KChart.LineChart = KChart.Chart.extend({
             }
         }
 
-        var radius = this.width * 0.005;
+        var radius = me.width * 0.005;
+        var centers = [];
         for (i = 0; i < values.length; i++) {
+            centers[i] = new Vertex(axisTickX[i], axisTickY[i]);
             dots[i] = {
-                shape: new KChart.Circle(new Vertex(axisTickX[i], axisTickY[i]), radius),
+                shape: new Circle(centers[i], radius),
                 style: styles[i]
             };
         }
 
-        var animation = new KChart.LineAnimation(0, 100);
-        animation.begin(painter, this);
+        var animationConfig = config.animation || defaultConfig.animation;
+        if (animationConfig.enable) {
+            var animation = new KChart.LineAnimation(0, animationConfig.during, animationConfig.tween);
+            animation.begin(painter, me);
+        }
+        else {
+            var polyLine = new KChart.PolyLine(centers);
+            painter.setStyle(me.lineStyle)
+            painter.draw(polyLine);
 
-        var event = this.config.event,
-            defaultEvent = KChart.Chart.defaultConfig.event;
+            for (i = 0; i < dots.length; i++) {
+                painter.setStyle(dots[i].style);
+                painter.draw(dots[i].shape);
+            }
+        }
+
+        var event = config.event,
+            defaultEvent = defaultConfig.event;
         if (event && event.hover && event.hover.enable) {
             var tooltipStyle = event.hover.tooltipStyle || defaultEvent.hover.tooltipStyle;
-            var handler = new KChart.HoverHandler(this, tooltipStyle);
-            KChart.Event.addEvent(this, "mousemove", handler.handle.bind(handler));
+            var handler = new KChart.HoverHandler(me, tooltipStyle);
+            KChart.Event.addEvent(me, "mousemove", handler.handle.bind(handler));
         }
     },
 
@@ -79,7 +102,7 @@ KChart.LineChart = KChart.Chart.extend({
                     fill: true,
                     fillColor: 'red'
                 }),
-                lineStyle:new KChart.Style({
+                lineStyle: new KChart.Style({
                     stroke: true,
                     borderColor: '#3398DB',
                 })

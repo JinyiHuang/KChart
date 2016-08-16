@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="../src/KChart.js"></script>
+</head>
+<body>
+    <canvas id="canvas" height="800" width="800"></canvas>
+    <script>
+        var Style = KChart.Style;
+        var canvas = document.getElementById('canvas');
+        var graphics = new KChart.CanvasGraphics(canvas);
+        var fanChart = new KChart.FanChart(graphics, {
+            center: ['50%', '50%'],
+            radius: '50%',
+            data: {
+                values: [100, 50, 100, 500, 450, 230, 120],
+                styles: [
+                    new Style({
+                        stroke: false,
+                        fill: true,
+                        fillColor: "#3398DB"
+                    }),
+                    new Style({
+                        stroke: false,
+                        fill: true,
+                        fillColor: "red"
+                    }),
+                    new Style({
+                        stroke: false,
+                        fill: true,
+                        fillColor: "green"
+                    }),
+                    new Style({
+                        stroke: false,
+                        fill: true,
+                        fillColor: "blue"
+                    }),
+                    new Style({
+                        stroke: false,
+                        fill: true,
+                        fillColor: "yellow"
+                    }),
+                    new Style({
+                        stroke: false,
+                        fill: true,
+                        fillColor: "orange"
+                    }),
+                    new Style({
+                        stroke: false,
+                        fill: true,
+                        fillColor: "#ccc"
+                    }),
+                ]
+            },
+            xAxis: {
+                labels: ['aa', 'bb', 'cc', 'dd', 'ee', 'ff', 'gg']
+            },
+            event: {
+                hover: {
+                    enable: true
+                }
+            }
+        });
+        fanChart.draw();
+    </script>
+</body>
+</html>

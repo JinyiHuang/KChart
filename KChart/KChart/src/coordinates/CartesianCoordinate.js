@@ -1,47 +1,51 @@
 KChart.CartesianCoordinate = KChart.Coordinate.extend({
 
     initialize: function (basePoint, width, height, xAxis, yAxis, elementCount) {
-        this.basePoint = basePoint;
-        this.elementCount = elementCount;
-        this.width = width;
-        this.unitWidth = width / elementCount;
-        this.height = height;
+        var me = this;
+        me.basePoint = basePoint;
+        me.elementCount = elementCount;
+        me.width = width;
+        me.unitWidth = width / elementCount;
+        me.height = height;
 
-        this.xAxis = xAxis;
-        this.yAxis = yAxis;
+        me.xAxis = xAxis;
+        me.yAxis = yAxis;
     },
 
     draw: function (painter) {
-        this.drawXAxis(painter);
-        this.drawYAxis(painter);
-        this.drawValueLine(painter);
+        var me = this;
+        me.drawXAxis(painter);
+        me.drawYAxis(painter);
+        me.drawValueLine(painter);
     },
 
     drawWithoutValueLine: function (painter) {
-        this.drawXAxis(painter);
-        this.drawYAxis(painter);
+        var me = this;
+        me.drawXAxis(painter);
+        me.drawYAxis(painter);
     },
 
     drawXAxis: function (painter) {
+        var me = this;
         var oldStyle = painter.style;
-        painter.setStyle(this.xAxis.style);
+        painter.setStyle(me.xAxis.style);
 
         var Vertex = KChart.Vertex,
-            basePoint = this.basePoint;
-        var endPoint = new Vertex(this.width + basePoint.x, basePoint.y);
+            basePoint = me.basePoint;
+        var endPoint = new Vertex(me.width + basePoint.x, basePoint.y);
         var x = new KChart.PolyLine([basePoint, endPoint]);
         painter.draw(x);
 
-        var axisTick, axisTickX = this.axisTickX = [];
-        for (var i = 0; i < this.elementCount; i++) {
-            axisTickX[i] = basePoint.x + this.unitWidth / 2 + this.unitWidth * i;
+        var axisTick, axisTickX = me.axisTickX = [];
+        for (var i = 0; i < me.elementCount; i++) {
+            axisTickX[i] = basePoint.x + me.unitWidth / 2 + me.unitWidth * i;
             axisTick = new KChart.PolyLine([
                     new Vertex(axisTickX[i], basePoint.y),
-                    new Vertex(axisTickX[i], basePoint.y + this.height * 0.01)]);
+                    new Vertex(axisTickX[i], basePoint.y + me.height * 0.01)]);
             painter.draw(axisTick);
 
-            if (this.xAxis.labels[i]) {
-                painter.drawText(this.xAxis.labels[i], axisTickX[i], basePoint.y + this.height * 0.03);
+            if (me.xAxis.labels[i]) {
+                painter.drawText(me.xAxis.labels[i], axisTickX[i], basePoint.y + me.height * 0.03);
             }
         }
 
@@ -49,42 +53,44 @@ KChart.CartesianCoordinate = KChart.Coordinate.extend({
     },
 
     drawYAxis: function (painter) {
+        var me = this;
         var oldStyle = painter.style;
-        painter.setStyle(this.yAxis.style);
+        painter.setStyle(me.yAxis.style);
 
         var Vertex = KChart.Vertex,
-            basePoint = this.basePoint;
-        var endPoint = new Vertex(basePoint.x, basePoint.y - this.height);
+            basePoint = me.basePoint;
+        var endPoint = new Vertex(basePoint.x, basePoint.y - me.height);
         var y = new KChart.PolyLine([basePoint, endPoint]);
         painter.draw(y);
 
-        var axisTick, axisTickY = this.axisTickY = [];
-        var maxValue = KChart.Helper.getMax(this.yAxis.values);
-        var unitHeight = this.height / maxValue;
-        for (var i = 0; i < this.elementCount; i++) {
-            axisTickY[i] = basePoint.y - unitHeight * this.yAxis.values[i];
+        var axisTick, axisTickY = me.axisTickY = [];
+        var maxValue = KChart.Helper.getMax(me.yAxis.values);
+        var unitHeight = me.height / maxValue;
+        for (var i = 0; i < me.elementCount; i++) {
+            axisTickY[i] = basePoint.y - unitHeight * me.yAxis.values[i];
             axisTick = new KChart.PolyLine([
                     new Vertex(basePoint.x, axisTickY[i]),
-                    new Vertex(basePoint.x - this.width * 0.01, axisTickY[i])]);
+                    new Vertex(basePoint.x - me.width * 0.01, axisTickY[i])]);
             painter.draw(axisTick);
 
-            painter.drawText(this.yAxis.values[i], basePoint.x - this.width * 0.01, axisTickY[i]);
+            painter.drawText(me.yAxis.values[i], basePoint.x - me.width * 0.01, axisTickY[i]);
         }
 
         painter.setStyle(oldStyle);
     },
 
     drawValueLine: function (painter) {
+        var me = this;
         var oldStyle = painter.style;
         var Vertex = KChart.Vertex,
-            basePoint = this.basePoint,
-            axisTickY = this.axisTickY;
-        painter.setStyle(this.yAxis.valueLineStyle);
+            basePoint = me.basePoint,
+            axisTickY = me.axisTickY;
+        painter.setStyle(me.yAxis.valueLineStyle);
         var valueLine;
-        for (i = 0; i < this.elementCount; i++) {
+        for (i = 0; i < me.elementCount; i++) {
             valueLine = new KChart.PolyLine([
                     new Vertex(basePoint.x, axisTickY[i]),
-                    new Vertex(basePoint.x + this.width, axisTickY[i])]);
+                    new Vertex(basePoint.x + me.width, axisTickY[i])]);
             painter.draw(valueLine);
         }
 

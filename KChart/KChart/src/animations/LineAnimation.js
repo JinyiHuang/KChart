@@ -5,15 +5,22 @@ KChart.LineAnimation = KChart.Animation.extend({
     },
 
     begin: function (painter, chart) {
-        var Vertex = KChart.Vertex,
+        var me = this,
+            Vertex = KChart.Vertex,
+            PolyLine = KChart.PolyLine,
             elements = chart.elements,
             coordinate = chart.coordinate,
-            tween = this.tween,
-            start = this.start,
-            end = Math.floor(this.end / (chart.elementCount - 1)),
-            index = 0;
+            tween = me.tween,
+            start = me.start,
+            end = Math.floor(me.end / (chart.elementCount - 1)),
+            index = 0,
+            graphics = painter.graphics,
+            width = graphics.width,
+            height = graphics.height,
+            requestAnimFrame = KChart.CrossBrowserAnimFrame.requestAnimFrame,
+            cancelAnimFrame = KChart.CrossBrowserAnimFrame.cancelAnimFrame;
 
-        var centers = [];
+        var centers = [], points = [];
         for (var i = 0; i < elements.length; i++) {
             centers[i] = elements[i].shape.center;
         }
@@ -24,23 +31,23 @@ KChart.LineAnimation = KChart.Animation.extend({
                 (centers[index].x - centers[index + 1].x),
             a = centers[index].y - k * centers[index].x;
 
-        KChart.CrossBrowserAnimFrame.requestAnimFrame.call(window, draw);
+        var xChange;
+        requestAnimFrame.call(window, draw);
 
         function draw() {
-            var xChange = tween(start, beginValue, variation, end);
+            xChange = tween(start, beginValue, variation, end);
             start++;
 
-            var graphics = painter.graphics;
-            graphics.clearRect(0, 0, graphics.width, graphics.height);
+            graphics.clearRect(0, 0, width, height);
             coordinate.draw(painter);
 
-            var points = [];
+            points = [];
             for (var i = 0; i <= index; i++) {
                 points[i] = centers[i];
             }
             points.push(new Vertex(xChange, k * xChange + a))
             painter.setStyle(chart.lineStyle);
-            painter.draw(new KChart.PolyLine(points));
+            painter.draw(new PolyLine(points));
 
             for (i = 0; i <= index; i++) {
                 painter.setStyle(elements[i].style);
@@ -48,7 +55,7 @@ KChart.LineAnimation = KChart.Animation.extend({
             }
 
             if (start <= end) {
-                KChart.CrossBrowserAnimFrame.requestAnimFrame.call(window, draw);
+                requestAnimFrame.call(window, draw);
             }
             else {
                 index++;
@@ -56,7 +63,7 @@ KChart.LineAnimation = KChart.Animation.extend({
                 if (index == elements.length - 1) {
                     painter.setStyle(elements[index].style);
                     painter.draw(elements[index].shape);
-                    KChart.CrossBrowserAnimFrame.cancelAnimFrame.call(window, draw);
+                    cancelAnimFrame.call(window, draw);
                 } else {
                     start = 0;
                     beginValue = centers[index].x;
@@ -65,7 +72,7 @@ KChart.LineAnimation = KChart.Animation.extend({
                         (centers[index].x - centers[index + 1].x);
                     a = centers[index].y - k * centers[index].x;
 
-                    KChart.CrossBrowserAnimFrame.requestAnimFrame.call(window, draw);
+                    requestAnimFrame.call(window, draw);
                 }
             }
         }

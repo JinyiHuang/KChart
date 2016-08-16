@@ -1,26 +1,27 @@
 KChart.Chart = KChart.Object.extend({
 
     initialize: function (graphics, config) {
-        this.config = config || KChart.Chart.defaultConfig;
+        var me = this;
+        me.config = config || KChart.Chart.defaultConfig;
 
         if (!graphics) {
             throw Error("The Argument 'graphics' Cannot Be Null");
         }
-        this.graphics = graphics;
+        me.graphics = graphics;
 
-        var grid = this.config.grid || KChart.Chart.defaultConfig.grid,
+        var grid = me.config.grid || KChart.Chart.defaultConfig.grid,
             defaultGrid = KChart.Chart.defaultConfig.grid;
-        this.padingLeft = grid.left || defaultGrid.left;
-        this.padingRight = grid.right || defaultGrid.right;
-        this.padingTop = grid.top || defaultGrid.top;
-        this.padingBottom = grid.bottom || defaultGrid.bottom;
+        me.padingLeft = grid.left || defaultGrid.left;
+        me.padingRight = grid.right || defaultGrid.right;
+        me.padingTop = grid.top || defaultGrid.top;
+        me.padingBottom = grid.bottom || defaultGrid.bottom;
 
-        this.width = graphics.width * (1 - Number.parseFloat(this.padingLeft) / 100 - Number.parseFloat(this.padingRight) / 100);
-        this.height = graphics.height * (1 - Number.parseFloat(this.padingTop) / 100 - Number.parseFloat(this.padingBottom) / 100);
+        me.width = graphics.width * (1 - Number.parseFloat(me.padingLeft) / 100 - Number.parseFloat(me.padingRight) / 100);
+        me.height = graphics.height * (1 - Number.parseFloat(me.padingTop) / 100 - Number.parseFloat(me.padingBottom) / 100);
 
-        var valueLength = this.config.data.values.length,
-            labelLength = this.config.xAxis.labels.length;
-        this.elementCount = valueLength > labelLength ? valueLength : labelLength;
+        var valueLength = me.config.data.values.length,
+            labelLength = me.config.xAxis.labels.length;
+        me.elementCount = valueLength > labelLength ? valueLength : labelLength;
     },
 
     draw: function () {
@@ -73,6 +74,12 @@ KChart.Chart = KChart.Object.extend({
                         fontSize: '14px'
                     })
                 }
+            },
+
+            animation: {
+                enable: true,
+                during: 30,
+                tween: KChart.Tween.Linear
             }
         }
     }

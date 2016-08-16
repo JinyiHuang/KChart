@@ -5,13 +5,18 @@ KChart.FanAnimation = KChart.Animation.extend({
     },
 
     begin: function (painter, chart) {
-        var Fan = KChart.Fan;
-        elements = chart.elements,
-        tween = this.tween,
-        start = this.start,
-        end = Math.floor(this.end / (chart.elementCount - 1)),
-        index = 0,
-        graphics = painter.graphics;
+        var me = this,
+            Fan = KChart.Fan,
+            elements = chart.elements,
+            tween = me.tween,
+            start = me.start,
+            end = Math.floor(me.end / (chart.elementCount - 1)),
+            index = 0,
+            graphics = painter.graphics,
+            width = graphics.width,
+            height = graphics.height,
+            requestAnimFrame = KChart.CrossBrowserAnimFrame.requestAnimFrame,
+            cancelAnimFrame = KChart.CrossBrowserAnimFrame.cancelAnimFrame;
 
         var center = chart.center;
 
@@ -19,13 +24,14 @@ KChart.FanAnimation = KChart.Animation.extend({
             variation = elements[index].shape.eAngle - elements[index].shape.sAngle,
             radius = elements[index].shape.radius;
 
-        KChart.CrossBrowserAnimFrame.requestAnimFrame.call(window, draw);
+        var eChange;
+        requestAnimFrame.call(window, draw);
 
         function draw() {
-            var eChange = tween(start, beginValue, variation, end);
             start++;
-
-            graphics.clearRect(0, 0, graphics.width, graphics.height);
+            eChange = tween(start, beginValue, variation, end);
+            
+            graphics.clearRect(0, 0, width, height);
 
             for (var i = 0; i < index; i++) {
                 painter.setStyle(elements[i].style);
@@ -36,20 +42,20 @@ KChart.FanAnimation = KChart.Animation.extend({
             painter.draw(new Fan(center, radius, beginValue, eChange));
 
             if (start <= end) {
-                KChart.CrossBrowserAnimFrame.requestAnimFrame.call(window, draw);
+                requestAnimFrame.call(window, draw);
             }
             else {
                 index++;
 
                 if (index == elements.length) {
-                    KChart.CrossBrowserAnimFrame.cancelAnimFrame.call(window, draw);
+                    cancelAnimFrame.call(window, draw);
                 } else {
                     start = 0;
                     beginValue = elements[index].shape.sAngle,
                     variation = elements[index].shape.eAngle - elements[index].shape.sAngle,
                     radius = elements[index].shape.radius;
 
-                    KChart.CrossBrowserAnimFrame.requestAnimFrame.call(window, draw);
+                    requestAnimFrame.call(window, draw);
                 }
             }
         }

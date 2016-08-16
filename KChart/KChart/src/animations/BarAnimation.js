@@ -5,12 +5,18 @@ KChart.BarAnimation = KChart.Animation.extend({
     },
 
     begin: function (painter, chart) {
-        var Vertex = KChart.Vertex,
+        var me = this,
+            Vertex = KChart.Vertex,
+            Polygon = KChart.Polygon,
             elements = chart.elements,
             coordinate = chart.coordinate,
-            tween = this.tween,
-            start = this.start,
-            end = this.end;
+            tween = me.tween,
+            start = me.start,
+            end = me.end,
+            graphics = painter.graphics,
+            width = graphics.width,
+            height = graphics.height,
+            requestAnimFrame = KChart.CrossBrowserAnimFrame.requestAnimFrame;
 
         var beginValues = [],
             variations = [],
@@ -24,19 +30,18 @@ KChart.BarAnimation = KChart.Animation.extend({
             xRight[i] = elements[i].shape.vertexes[3].x;
         }
 
+        var yChange, polygon;
         KChart.CrossBrowserAnimFrame.requestAnimFrame.call(window, draw);
 
         function draw() {
-            var yChange, polygon;
             start++;
 
-            var graphics = painter.graphics;
-            graphics.clearRect(0, 0, graphics.width, graphics.height);
+            graphics.clearRect(0, 0, width, height);
             coordinate.draw(painter);
 
             for (var i = 0; i < elements.length; i++) {
                 yChange = tween(start, beginValues[i], variations[i], end);
-                polygon = new KChart.Polygon([
+                polygon = new Polygon([
                         new Vertex(xLeft[i], beginValues[i]),
                         new Vertex(xLeft[i], yChange),
                         new Vertex(xRight[i], yChange),
@@ -46,10 +51,10 @@ KChart.BarAnimation = KChart.Animation.extend({
             }
 
             if (start <= end) {
-                KChart.CrossBrowserAnimFrame.requestAnimFrame.call(window, draw);
+                requestAnimFrame.call(window, draw);
             }
             else {
-                graphics.clearRect(0, 0, graphics.width, graphics.height);
+                graphics.clearRect(0, 0, width, height);
                 coordinate.drawValueLine(painter);
                 for (i = 0; i < elements.length; i++) {
                     painter.setStyle(elements[i].style);

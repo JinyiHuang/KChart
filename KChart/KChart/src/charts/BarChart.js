@@ -1,13 +1,14 @@
 KChart.BarChart = KChart.Chart.extend({
 
     initialize: function (graphics, config) {
-        this.constructor.__base__.initialize.apply(this, arguments);
+        var me = this;
+        me.constructor.__base__.initialize.apply(me, arguments);
 
-        var graphics = this.graphics,
-            config = this.config,
+        var graphics = me.graphics,
+            config = me.config,
             defaultConfig = KChart.Chart.defaultConfig;
-        var basePoint = new KChart.Vertex(graphics.width * Number.parseInt(this.padingLeft) / 100,
-                graphics.height * Number.parseInt(this.padingTop) / 100 + this.height);
+        var basePoint = new KChart.Vertex(graphics.width * Number.parseInt(me.padingLeft) / 100,
+                graphics.height * Number.parseInt(me.padingTop) / 100 + me.height);
         var xAxis = config.xAxis || defaultConfig.xAxis,
             yAxis = config.yAxis || defaultConfig.yAxis;
 
@@ -16,21 +17,28 @@ KChart.BarChart = KChart.Chart.extend({
         yAxis.valueLineStyle = yAxis.valueLineStyle || defaultConfig.yAxis.valueLineStyle;
         yAxis.values = config.data.values;
 
-        this.coordinate = new KChart.CartesianCoordinate(basePoint, this.width, this.height, xAxis, yAxis, this.elementCount);
+        me.coordinate = new KChart.CartesianCoordinate(basePoint, me.width, me.height, xAxis, yAxis, me.elementCount);
     },
 
     draw: function () {
+        var me = this;
+        me.constructor.__base__.draw.apply(me, arguments);
 
-        this.constructor.__base__.draw.apply(this, arguments);
+        var coordinate = me.coordinate,
+            graphics = me.graphics,
+            width = graphics.width,
+            height = graphics.height,
+            painter = new KChart.Painter(graphics);
 
-        var painter = new KChart.Painter(this.graphics, new KChart.Style());
+        coordinate.draw(painter);
 
-        this.coordinate.draw(painter);
+        var Vertex = KChart.Vertex,
+            config = me.config,
+            defaultConfig = KChart.Chart.defaultConfig;
 
-        var Vertex = KChart.Vertex;
-        var polygons = this.elements = [];
-        var data = this.config.data,
-            defaultData = KChart.BarChart.defaultConfig.data;
+        var polygons = me.elements = [];
+        var data = config.data,
+            defaultData = defaultConfig.data;
 
         if (data.values.length == 0) {
             return;
@@ -38,10 +46,10 @@ KChart.BarChart = KChart.Chart.extend({
 
         var values = data.values,
             barWidth = Number.parseFloat(data.barWidth || defaultData.barWidth) / 100,
-            unitWidth = this.coordinate.unitWidth,
-            basePoint = this.coordinate.basePoint,
-            axisTickX = this.coordinate.axisTickX,
-            axisTickY = this.coordinate.axisTickY;
+            unitWidth = coordinate.unitWidth,
+            basePoint = coordinate.basePoint,
+            axisTickX = coordinate.axisTickX,
+            axisTickY = coordinate.axisTickY;
 
         var styles = data.styles || defaultData.style;
         if (!Array.isArray(styles)) {
@@ -62,15 +70,27 @@ KChart.BarChart = KChart.Chart.extend({
             polygons[i] = { shape: new KChart.Polygon([lbPoint, ltPoint, rtPoint, rbPoint]), style: styles[i] };
         }
 
-        var animation = new KChart.BarAnimation(0, 30);
-        animation.begin(painter, this);
+        var animationConfig = config.animation || defaultConfig.animation;
+        if (animationConfig.enable) {
+            var animation = new KChart.BarAnimation(0, animationConfig.during, animationConfig.tween);
+            animation.begin(painter, me);
+        }
+        else {
+            graphics.clearRect(0, 0, width, height);
+            coordinate.drawValueLine(painter);
+            for (i = 0; i < polygons.length; i++) {
+                painter.setStyle(polygons[i].style);
+                painter.draw(polygons[i].shape);
+            }
+            coordinate.drawWithoutValueLine(painter);
+        }
 
-        var event = this.config.event,
-            defaultEvent = KChart.Chart.defaultConfig.event;
+        var event = config.event,
+            defaultEvent = defaultConfig.event;
         if (event && event.hover && event.hover.enable) {
             var tooltipStyle = event.hover.tooltipStyle || defaultEvent.hover.tooltipStyle;
-            var handler = new KChart.HoverHandler(this, tooltipStyle);
-            KChart.Event.addEvent(this, "mousemove", handler.handle.bind(handler));
+            var handler = new KChart.HoverHandler(me, tooltipStyle);
+            KChart.Event.addEvent(me, "mousemove", handler.handle.bind(handler));
         }
     },
 
