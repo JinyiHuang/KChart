@@ -7,8 +7,9 @@ KChart.BarChart = KChart.Chart.extend({
         var graphics = me.graphics,
             config = me.config,
             defaultConfig = KChart.Chart.defaultConfig;
-        var basePoint = new KChart.Vertex(graphics.width * Number.parseInt(me.padingLeft) / 100,
-                graphics.height * Number.parseInt(me.padingTop) / 100 + me.height);
+        var convert = KChart.Helper.convertPercentToNumber;
+        var basePoint = new KChart.Vertex(graphics.width * convert(me.padingLeft),
+                graphics.height * convert(me.padingTop) + me.height);
         var xAxis = config.xAxis || defaultConfig.xAxis,
             yAxis = config.yAxis || defaultConfig.yAxis;
 
@@ -45,7 +46,7 @@ KChart.BarChart = KChart.Chart.extend({
         }
 
         var values = data.values,
-            barWidth = Number.parseFloat(data.barWidth || defaultData.barWidth) / 100,
+            barWidth = KChart.Helper.convertPercentToNumber(data.barWidth || defaultData.barWidth),
             unitWidth = coordinate.unitWidth,
             basePoint = coordinate.basePoint,
             axisTickX = coordinate.axisTickX,

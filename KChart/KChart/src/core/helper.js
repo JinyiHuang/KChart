@@ -30,5 +30,9 @@ KChart.Helper = {
             amount += values[i];
         }
         return amount;
+    },
+
+    convertPercentToNumber: function (percent) {
+        return Number.parseFloat(percent) / 100;
     }
 };

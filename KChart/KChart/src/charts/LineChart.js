@@ -7,8 +7,9 @@ KChart.LineChart = KChart.Chart.extend({
         var graphics = me.graphics,
             config = me.config,
             defaultConfig = KChart.Chart.defaultConfig;
-        var basePoint = new KChart.Vertex(graphics.width * Number.parseInt(me.padingLeft) / 100,
-                graphics.height * Number.parseInt(this.padingTop) / 100 + me.height);
+        var convert = KChart.Helper.convertPercentToNumber;
+        var basePoint = new KChart.Vertex(graphics.width * convert(me.padingLeft),
+                graphics.height * convert(this.padingTop) + me.height);
         var xAxis = config.xAxis || defaultConfig.xAxis,
             yAxis = config.yAxis || defaultConfig.yAxis;
 

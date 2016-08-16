@@ -16,8 +16,9 @@ KChart.Chart = KChart.Object.extend({
         me.padingTop = grid.top || defaultGrid.top;
         me.padingBottom = grid.bottom || defaultGrid.bottom;
 
-        me.width = graphics.width * (1 - Number.parseFloat(me.padingLeft) / 100 - Number.parseFloat(me.padingRight) / 100);
-        me.height = graphics.height * (1 - Number.parseFloat(me.padingTop) / 100 - Number.parseFloat(me.padingBottom) / 100);
+        var convert = KChart.Helper.convertPercentToNumber;
+        me.width = graphics.width * (1 - convert(me.padingLeft) - convert(me.padingRight));
+        me.height = graphics.height * (1 - convert(me.padingTop) - convert(me.padingBottom));
 
         var valueLength = me.config.data.values.length,
             labelLength = me.config.xAxis.labels.length;

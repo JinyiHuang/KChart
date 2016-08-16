@@ -57,8 +57,8 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="KChart\samples\BarChartTest.html" />
-    <Content Include="KChart\samples\FanChartTest.html" />
+    <Content Include="KChart\samples\BarChartDemo.html" />
+    <Content Include="KChart\samples\FanChartDemo.html" />
     <Content Include="KChart\src\animations\BarAnimation.js" />
     <Content Include="KChart\src\animations\FanAnimation.js" />
     <Content Include="KChart\src\animations\LineAnimation.js" />
@@ -99,7 +99,7 @@
     <Content Include="KChart\test\point.test.js" />
     <Content Include="KChart\test\polygon.test.js" />
     <Content Include="KChart\test\polyLine.test.js" />
-    <Content Include="KChart\samples\LineChartTest.html" />
+    <Content Include="KChart\samples\LineChartDemo.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

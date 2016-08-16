@@ -11,12 +11,13 @@ KChart.FanChart = KChart.Chart.extend({
             defaultConfig = KChart.Chart.defaultConfig;
 
         var centerPrecent = config.center || defaultConfig.center;
-        var left = (graphics.width * Number.parseFloat(me.padingLeft) + width * Number.parseFloat(centerPrecent[0])) / 100,
-            top = (graphics.height * Number.parseFloat(me.padingTop) + height * Number.parseFloat(centerPrecent[1])) / 100;
+        var convert = KChart.Helper.convertPercentToNumber;
+        var left = graphics.width * convert(me.padingLeft) + width * convert(centerPrecent[0]),
+            top = graphics.height * convert(me.padingTop) + height * convert(centerPrecent[1]);
         me.center = new KChart.Vertex(left, top);
 
         var radiusPrecent = config.radius || defaultConfig.radius;
-        me.maxRadius = width < height ? width * Number.parseFloat(radiusPrecent) / 100 : height * Number.parseFloat(radiusPrecent) / 100;
+        me.maxRadius = width < height ? width * convert(radiusPrecent) : height * convert(radiusPrecent);
     },
 
     draw: function (canvas, style) {

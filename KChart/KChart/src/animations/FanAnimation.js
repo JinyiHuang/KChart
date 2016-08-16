@@ -41,7 +41,7 @@ KChart.FanAnimation = KChart.Animation.extend({
             painter.setStyle(elements[index].style);
             painter.draw(new Fan(center, radius, beginValue, eChange));
 
-            if (start <= end) {
+            if (start < end) {
                 requestAnimFrame.call(window, draw);
             }
             else {
