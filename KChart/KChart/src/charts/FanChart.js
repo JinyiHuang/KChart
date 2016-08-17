@@ -8,7 +8,7 @@ KChart.FanChart = KChart.Chart.extend({
             width = me.width,
             height = me.height,
             config = me.config,
-            defaultConfig = KChart.Chart.defaultConfig;
+            defaultConfig = KChart.FanChart.defaultConfig;
 
         var centerPrecent = config.center || defaultConfig.center;
         var convert = KChart.Helper.convertPercentToNumber;
@@ -17,7 +17,7 @@ KChart.FanChart = KChart.Chart.extend({
         me.center = new KChart.Vertex(left, top);
 
         var radiusPrecent = config.radius || defaultConfig.radius;
-        me.maxRadius = width < height ? width * convert(radiusPrecent) : height * convert(radiusPrecent);
+        me.maxRadius = width < height ? width * convert(radiusPrecent) / 2 : height * convert(radiusPrecent) / 2;
     },
 
     draw: function (canvas, style) {
@@ -28,7 +28,7 @@ KChart.FanChart = KChart.Chart.extend({
 
         var Vertex = KChart.Vertex,
             config = me.config,
-            defaultConfig = KChart.Chart.defaultConfig;
+            defaultConfig = KChart.FanChart.defaultConfig;
 
         var fans = me.elements = [];
 
@@ -86,6 +86,52 @@ KChart.FanChart = KChart.Chart.extend({
             var tooltipStyle = event.hover.tooltipStyle || defaultEvent.hover.tooltipStyle;
             var handler = new KChart.HoverHandler(me, tooltipStyle);
             KChart.Event.addEvent(me, "mousemove", handler.handle.bind(handler));
+        }
+    },
+
+    statics: {
+        defaultConfig: {
+            grid: {
+                left: '5%',
+                right: '5%',
+                top: '5%',
+                bottom: '5%'
+            },
+
+            data: {
+                value: [],
+                style: new KChart.Style({
+                    stroke: true,
+                    border: 'black',
+                    fill: true,
+                    fillColor: 'red'
+                })
+            },
+
+            center: ['50%', '50%'],
+
+            radius: '80%',
+
+            xAxis: {
+                labels: []
+            },
+
+            event: {
+                hover: {
+                    enable: false,
+                    tooltipStyle: new KChart.Style({
+                        fillColor: "rgba(50, 50, 50, 0.701961)",
+                        fontColor: "#fff",
+                        fontSize: '14px'
+                    })
+                }
+            },
+
+            animation: {
+                enable: true,
+                during: 30,
+                tween: KChart.Tween.Linear
+            }
         }
     }
 

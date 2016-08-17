@@ -73,10 +73,10 @@
     <Content Include="KChart\src\core\Chart.js" />
     <Content Include="KChart\src\core\Class.js" />
     <Content Include="KChart\src\coordinates\Coordinate.js" />
-    <Content Include="KChart\src\CrossBrowser\CrossBrowserAnimFrame.js" />
+    <Content Include="KChart\src\crossBrowser\CrossBrowserAnimFrame.js" />
     <Content Include="KChart\src\handlers\Handler.js" />
     <Content Include="KChart\src\core\Helper.js" />
-    <Content Include="KChart\src\CrossBrowser\CrossBrowserEvent.js" />
+    <Content Include="KChart\src\crossBrowser\CrossBrowserEvent.js" />
     <Content Include="KChart\src\core\Painter.js" />
     <Content Include="KChart\src\shapes\Shape.js" />
     <Content Include="KChart\src\core\Style.js" />
@@ -85,7 +85,6 @@
     <Content Include="KChart\src\core\Vertex.js" />
     <Content Include="KChart\src\graphics\CanvasGraphics.js" />
     <Content Include="KChart\src\handlers\HoverHandler.js" />
-    <Content Include="KChart\src\KChart-min.js" />
     <Content Include="KChart\src\KChart.js" />
     <Content Include="KChart\src\shapes\Arc.js" />
     <Content Include="KChart\src\shapes\Circle.js" />
@@ -106,7 +105,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="KChart\docs\Getting-Started.md" />
+    <Content Include="KChart\docs\1-Getting-Started.md" />
+    <Content Include="KChart\docs\Bar Chart Configutation.md" />
+    <Content Include="KChart\docs\Line Chart Configutation.md" />
+    <Content Include="KChart\docs\Fan Chart Configutation.md" />
+    <Content Include="KChart\docs\Default Style.md" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -6,7 +6,7 @@ KChart.LineChart = KChart.Chart.extend({
 
         var graphics = me.graphics,
             config = me.config,
-            defaultConfig = KChart.Chart.defaultConfig;
+            defaultConfig = KChart.LineChart.defaultConfig;
         var convert = KChart.Helper.convertPercentToNumber;
         var basePoint = new KChart.Vertex(graphics.width * convert(me.padingLeft),
                 graphics.height * convert(this.padingTop) + me.height);
@@ -95,6 +95,13 @@ KChart.LineChart = KChart.Chart.extend({
 
     statics: {
         defaultConfig: {
+            grid: {
+                left: '5%',
+                right: '5%',
+                top: '5%',
+                bottom: '5%'
+            },
+
             data: {
                 value: [],
                 style: new KChart.Style({
@@ -107,6 +114,47 @@ KChart.LineChart = KChart.Chart.extend({
                     stroke: true,
                     borderColor: '#3398DB',
                 })
+            },
+
+            xAxis: {
+                style: new KChart.Style({
+                    borderColor: 'black',
+                    weight: '1px',
+                    fill: true,
+                    fillColor: 'black'
+                }),
+                labels: []
+            },
+
+            yAxis: {
+                style: new KChart.Style({
+                    borderColor: 'black',
+                    weight: '1px',
+                    textAlign: 'right'
+                }),
+                valueLineStyle: new KChart.Style({
+                    borderColor: '#ccc',
+                    weight: '1px',
+                    fill: true,
+                    fillColor: 'black'
+                })
+            },
+
+            event: {
+                hover: {
+                    enable: false,
+                    tooltipStyle: new KChart.Style({
+                        fillColor: "rgba(50, 50, 50, 0.701961)",
+                        fontColor: "#fff",
+                        fontSize: '14px'
+                    })
+                }
+            },
+
+            animation: {
+                enable: true,
+                during: 30,
+                tween: KChart.Tween.Linear
             }
         }
     }

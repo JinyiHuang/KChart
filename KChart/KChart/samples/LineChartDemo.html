@@ -7,8 +7,7 @@
 <body>
     <canvas id="canvas" height="800" width="800"></canvas>
     <script>
-        var canvas = document.getElementById('canvas');
-        var graphics = new KChart.CanvasGraphics(canvas);
+        var graphics = new KChart.CanvasGraphics('canvas');
         var lineChart = new KChart.LineChart(graphics, {
             data: {
                 values: [10, 50, 100, 500, 450, 230, 120]

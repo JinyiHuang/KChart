@@ -1,4 +1,4 @@
-KChart.Circle = KChart.Shape.extend({
+KChart.Circle = KChart.Arc.extend({
 	
 	initialize: function(center, radius) {
 		this.vertexes = [center];

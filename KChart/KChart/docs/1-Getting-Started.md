@@ -3,7 +3,7 @@
 To import KChart.js using an script tag:
 
 ```html
-<script src="KChart-min.js"></script>
+<script src="KChart.js"></script>
 ```
 
 ### Creating a Chart
@@ -15,7 +15,17 @@ To create a chart, we need to instantiate the subclass of `Graphics` class. To d
 ```
 
 ```javascript
-var ctx = document.getElementById("myChart");
+// Any of the following formats may be used
+
+//1
+var graphics = new KChart.CanvasGraphics('myChart');
+
+//2
+var ctx = document.getElementById('myChart');
+var graphics = new KChart.CanvasGraphics(ctx);
+
+//3
+var ctx = document.getElementById('myChart').getContext('2d');
 var graphics = new KChart.CanvasGraphics(ctx);
 ```
 

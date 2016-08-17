@@ -20,9 +20,9 @@ KChart.Chart = KChart.Object.extend({
         me.width = graphics.width * (1 - convert(me.padingLeft) - convert(me.padingRight));
         me.height = graphics.height * (1 - convert(me.padingTop) - convert(me.padingBottom));
 
-        var valueLength = me.config.data.values.length,
-            labelLength = me.config.xAxis.labels.length;
-        me.elementCount = valueLength > labelLength ? valueLength : labelLength;
+        //var valueLength = me.config.data.values.length,
+        //    labelLength = me.config.xAxis.labels.length;
+        me.elementCount = me.config.data.values.length;
     },
 
     draw: function () {
@@ -36,30 +36,6 @@ KChart.Chart = KChart.Object.extend({
                 right: '5%',
                 top: '5%',
                 bottom: '5%'
-            },
-
-            xAxis: {
-                style: new KChart.Style({
-                    borderColor: 'black',
-                    weight: '1px',
-                    fill: true,
-                    fillColor: 'black'
-                }),
-                labels: []
-            },
-
-            yAxis: {
-                style: new KChart.Style({
-                    borderColor: 'black',
-                    weight: '1px',
-                    textAlign: 'right'
-                }),
-                valueLineStyle: new KChart.Style({
-                    borderColor: '#ccc',
-                    weight: '1px',
-                    fill: true,
-                    fillColor: 'black'
-                })
             },
 
             data: {

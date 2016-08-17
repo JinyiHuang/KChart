@@ -14,6 +14,13 @@
             this.bgColor = ctx.canvas.style.background || 'white';
             this.ctx = ctx;
         }
+        else if (typeof ctx === 'string') {
+            var canvas = document.getElementById(ctx);
+            this.width = canvas.width;
+            this.height = canvas.height;
+            this.bgColor = canvas.style.background || 'white';
+            this.ctx = canvas.getContext('2d');
+        }
 
         Object.defineProperties(this, {
             'fillStyle': {

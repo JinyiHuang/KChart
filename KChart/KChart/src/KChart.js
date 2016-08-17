@@ -1,5 +1,5 @@
 var KChart = {
-    version: 2.0
+    version: '2.1.0'
 }; //As namespace
 
 
@@ -7,8 +7,8 @@ var KChart = {
 /// <reference path="core/Chart.js" />
 /// <reference path="core/Class.js" />
 /// <reference path="core/Coordinate.js" />
-/// <reference path="core/CrossBrowserAnimFrame.js" />
-/// <reference path="core/CrossBrowserEvent.js" />
+/// <reference path="core/crossBrowserAnimFrame.js" />
+/// <reference path="core/crossBrowserEvent.js" />
 /// <reference path="core/Graphics.js" />
 /// <reference path="core/Handler.js" />
 /// <reference path="core/Helper.js" />
@@ -39,8 +39,8 @@ var KChart = {
     var jsFiles = [
         "core/Class.js",
         "core/Helper.js",
-        "CrossBrowser/CrossBrowserAnimFrame.js",
-        "CrossBrowser/CrossBrowserEvent.js",
+        "CrossBrowser/crossBrowserAnimFrame.js",
+        "CrossBrowser/crossBrowserEvent.js",
         "core/Tween.js",
         "core/Vertex.js",
         "shapes/Shape.js",

@@ -6,7 +6,7 @@ KChart.BarChart = KChart.Chart.extend({
 
         var graphics = me.graphics,
             config = me.config,
-            defaultConfig = KChart.Chart.defaultConfig;
+            defaultConfig = KChart.BarChart.defaultConfig;
         var convert = KChart.Helper.convertPercentToNumber;
         var basePoint = new KChart.Vertex(graphics.width * convert(me.padingLeft),
                 graphics.height * convert(me.padingTop) + me.height);
@@ -35,7 +35,7 @@ KChart.BarChart = KChart.Chart.extend({
 
         var Vertex = KChart.Vertex,
             config = me.config,
-            defaultConfig = KChart.Chart.defaultConfig;
+            defaultConfig = KChart.BarChart.defaultConfig;
 
         var polygons = me.elements = [];
         var data = config.data,
@@ -97,6 +97,13 @@ KChart.BarChart = KChart.Chart.extend({
 
     statics: {
         defaultConfig: {
+            grid: {
+                left: '5%',
+                right: '5%',
+                top: '5%',
+                bottom: '5%'
+            },
+
             data: {
                 value: [],
                 barWidth: '60%',
@@ -105,6 +112,43 @@ KChart.BarChart = KChart.Chart.extend({
                     fill: true,
                     fillColor: "#3398DB"
                 })
+            },
+
+            xAxis: {
+                style: new KChart.Style({
+                    borderColor: 'black',
+                    weight: '1px',
+                }),
+                labels: []
+            },
+
+            yAxis: {
+                style: new KChart.Style({
+                    borderColor: 'black',
+                    weight: '1px',
+                    textAlign: 'right'
+                }),
+                valueLineStyle: new KChart.Style({
+                    borderColor: '#ccc',
+                    weight: '1px',
+                })
+            },
+
+            event: {
+                hover: {
+                    enable: false,
+                    tooltipStyle: new KChart.Style({
+                        fillColor: "rgba(50, 50, 50, 0.701961)",
+                        fontColor: "#fff",
+                        fontSize: '14px'
+                    })
+                }
+            },
+
+            animation: {
+                enable: true,
+                during: 30,
+                tween: KChart.Tween.Linear
             }
         }
     }
