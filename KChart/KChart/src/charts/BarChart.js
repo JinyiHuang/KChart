@@ -106,7 +106,7 @@ KChart.BarChart = KChart.Chart.extend({
 
             data: {
                 value: [],
-                barWidth: '60%',
+                barWidth: '50%',
                 style: new KChart.Style({
                     stroke: false,
                     fill: true,
@@ -126,7 +126,8 @@ KChart.BarChart = KChart.Chart.extend({
                 style: new KChart.Style({
                     borderColor: 'black',
                     weight: '1px',
-                    textAlign: 'right'
+                    textAlign: 'right',
+                    textBaseline: 'middle'
                 }),
                 valueLineStyle: new KChart.Style({
                     borderColor: '#ccc',

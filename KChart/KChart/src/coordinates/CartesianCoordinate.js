@@ -53,27 +53,36 @@ KChart.CartesianCoordinate = KChart.Coordinate.extend({
     },
 
     drawYAxis: function (painter) {
-        var me = this;
+        var me = this,
+            helper = KChart.Helper;
         var oldStyle = painter.style;
         painter.setStyle(me.yAxis.style);
 
         var Vertex = KChart.Vertex,
-            basePoint = me.basePoint;
-        var endPoint = new Vertex(basePoint.x, basePoint.y - me.height);
+            basePoint = me.basePoint,
+            endPoint = new Vertex(basePoint.x, basePoint.y - me.height);
         var y = new KChart.PolyLine([basePoint, endPoint]);
         painter.draw(y);
 
-        var axisTick, axisTickY = me.axisTickY = [];
-        var maxValue = KChart.Helper.getMax(me.yAxis.values);
-        var unitHeight = me.height / maxValue;
-        for (var i = 0; i < me.elementCount; i++) {
-            axisTickY[i] = basePoint.y - unitHeight * me.yAxis.values[i];
+        var max = helper.getMax(me.yAxis.values);
+        var axisTick,
+            y = me.y = [],
+            axisTickY = me.axisTickY = [],
+            maxCeil = helper.getMaxCeil(max);
+        var unitHeight = me.unitHeight = me.height / maxCeil;
+
+        for (var i = 0; i < 5; i++) {
+            y[i] = basePoint.y - unitHeight * maxCeil / 5 * (i + 1);
             axisTick = new KChart.PolyLine([
-                    new Vertex(basePoint.x, axisTickY[i]),
-                    new Vertex(basePoint.x - me.width * 0.01, axisTickY[i])]);
+                    new Vertex(basePoint.x, y[i]),
+                    new Vertex(basePoint.x - me.width * 0.01, y[i])]);
             painter.draw(axisTick);
 
-            painter.drawText(me.yAxis.values[i], basePoint.x - me.width * 0.01, axisTickY[i]);
+            painter.drawText(maxCeil / 5 * (i + 1), basePoint.x - me.width * 0.01, y[i]);
+        }
+
+        for (var i = 0; i < me.elementCount; i++) {
+            axisTickY[i] = basePoint.y - unitHeight * me.yAxis.values[i];
         }
 
         painter.setStyle(oldStyle);
@@ -84,7 +93,7 @@ KChart.CartesianCoordinate = KChart.Coordinate.extend({
         var oldStyle = painter.style;
         var Vertex = KChart.Vertex,
             basePoint = me.basePoint,
-            axisTickY = me.axisTickY;
+            axisTickY = me.y;
         painter.setStyle(me.yAxis.valueLineStyle);
         var valueLine;
         for (i = 0; i < me.elementCount; i++) {

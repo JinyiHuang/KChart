@@ -13,44 +13,44 @@
         var barChart = new KChart.BarChart(graphics, {
             data: {
                 values: [10, 50, 100, 500, 450, 230, 120],
-                barWidth: '70%',
-                styles:[
-                    new Style({
-                        stroke: false,
-                        fill: true,
-                        fillColor: "#3398DB"
-                    }),
-                    new Style({
-                        stroke: false,
-                        fill: true,
-                        fillColor: "red"
-                    }),
-                    new Style({
-                        stroke: false,
-                        fill: true,
-                        fillColor: "green"
-                    }),
-                    new Style({
-                        stroke: false,
-                        fill: true,
-                        fillColor: "blue"
-                    }),
-                    new Style({
-                        stroke: false,
-                        fill: true,
-                        fillColor: "yellow"
-                    }),
-                    new Style({
-                        stroke: false,
-                        fill: true,
-                        fillColor: "orange"
-                    }),
-                    new Style({
-                        stroke: false,
-                        fill: true,
-                        fillColor: "#ccc"
-                    }),
-                ]
+                //barWidth: '70%',
+                //styles:[
+                //    new Style({
+                //        stroke: false,
+                //        fill: true,
+                //        fillColor: "#3398DB"
+                //    }),
+                //    new Style({
+                //        stroke: false,
+                //        fill: true,
+                //        fillColor: "red"
+                //    }),
+                //    new Style({
+                //        stroke: false,
+                //        fill: true,
+                //        fillColor: "green"
+                //    }),
+                //    new Style({
+                //        stroke: false,
+                //        fill: true,
+                //        fillColor: "blue"
+                //    }),
+                //    new Style({
+                //        stroke: false,
+                //        fill: true,
+                //        fillColor: "yellow"
+                //    }),
+                //    new Style({
+                //        stroke: false,
+                //        fill: true,
+                //        fillColor: "orange"
+                //    }),
+                //    new Style({
+                //        stroke: false,
+                //        fill: true,
+                //        fillColor: "#ccc"
+                //    }),
+                //]
             },
             grid: {
                 left: '5%',
@@ -73,7 +73,8 @@
                 style: new Style({
                     borderColor: 'black',
                     weight: '1px',
-                    textAlign: 'right'
+                    textAlign: 'right',
+                    textBaseline: 'middle'
                 }),
                 valueLineStyle: new Style({
                     borderColor: '#ccc',
