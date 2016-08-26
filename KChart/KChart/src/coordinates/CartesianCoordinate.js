@@ -71,14 +71,14 @@ KChart.CartesianCoordinate = KChart.Coordinate.extend({
             maxCeil = helper.getMaxCeil(max);
         var unitHeight = me.unitHeight = me.height / maxCeil;
 
-        for (var i = 0; i < 5; i++) {
-            y[i] = basePoint.y - unitHeight * maxCeil / 5 * (i + 1);
+        for (var i = 0; i <= 5; i++) {
+            y[i] = basePoint.y - unitHeight * maxCeil / 5 * (i);
             axisTick = new KChart.PolyLine([
                     new Vertex(basePoint.x, y[i]),
                     new Vertex(basePoint.x - me.width * 0.01, y[i])]);
             painter.draw(axisTick);
 
-            painter.drawText(maxCeil / 5 * (i + 1), basePoint.x - me.width * 0.01, y[i]);
+            painter.drawText(maxCeil / 5 * (i), basePoint.x - me.width * 0.01, y[i]);
         }
 
         for (var i = 0; i < me.elementCount; i++) {
@@ -96,7 +96,7 @@ KChart.CartesianCoordinate = KChart.Coordinate.extend({
             axisTickY = me.y;
         painter.setStyle(me.yAxis.valueLineStyle);
         var valueLine;
-        for (i = 0; i < me.elementCount; i++) {
+        for (i = 1; i < axisTickY.length; i++) {
             valueLine = new KChart.PolyLine([
                     new Vertex(basePoint.x, axisTickY[i]),
                     new Vertex(basePoint.x + me.width, axisTickY[i])]);

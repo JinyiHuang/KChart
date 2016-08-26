@@ -45,7 +45,12 @@ KChart.FanChart = KChart.Chart.extend({
             var tempStyle = styles;
             styles = [];
             for (var i = 0; i < values.length; i++) {
-                styles[i] = tempStyle;
+                styles[i] = new KChart.Style(tempStyle);
+                var fillColor = styles[i].fillColor;
+                var r = Math.abs('0x' + fillColor.slice(1, 3) - 20 * i),
+                    g = Math.abs('0x' + fillColor.slice(3, 5) - 20 * i),
+                    b = Math.abs('0x' + fillColor.slice(5, 7) - 20 * i);
+                styles[i].fillColor = 'rgb(' + r +',' + g +',' + b +')';
             }
         }
 
@@ -104,7 +109,7 @@ KChart.FanChart = KChart.Chart.extend({
                     stroke: true,
                     border: 'black',
                     fill: true,
-                    fillColor: 'red'
+                    fillColor: '#ff8888'
                 })
             },
 
